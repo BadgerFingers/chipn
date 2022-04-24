@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Chippin",
+  "name": "Personalised crowdfunding for your business",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,8 +18,10 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "id": "https://chippin.netlify.app/",
+  "start_url": "https://chippin.netlify.app/",
+  "scope": "https://chippin.netlify.app/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#FF2A4F",
+  "background_color": "#21508A"
 }

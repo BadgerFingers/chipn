@@ -7,13 +7,14 @@ import CreatePassword from './CreatePassword';
 import EmailAddress from './EmailAddress';
 import PersonalDetails from './PersonalDetails';
 import PaymentDetails from './PaymentDetails';
+import ShareCampaign from './ShareCampaign';
 
 const CreateAccount = (props) => {
     const [step, setStep] = useState(null);
 
     useEffect(() => {
         if(props.active){
-            setStep(1);
+            setStep(1); // 6
         }
     }, [props.active])
     return (
@@ -32,13 +33,14 @@ const CreateAccount = (props) => {
                 </div>
             </div>
 
-            { step === 1 &&<EmailAddress nextStep={() => setStep(2)} /> }
+            { step === 1 &&<EmailAddress db={props.db} nextStep={() => setStep(2)} /> }
             { step === 2 && <ConfirmEmail nextStep={() => setStep(3)} /> }
             { step === 3 && <CreatePassword nextStep={() => setStep(4)} /> }
-            { step === 4 && <PersonalDetails nextStep={() => setStep(5)} /> }
+            { step === 4 && <PersonalDetails db={props.db} nextStep={() => setStep(5)} /> }
             { step === 5 && <AccountCreated nextStep={() => setStep(6)} /> }
-            { step === 6 && <CreateCampaign nextStep={() => setStep(7)} /> }
-            { step === 7 && <PaymentDetails nextStep={() => setStep(8)} /> }
+            { step === 6 && <CreateCampaign db={props.db} nextStep={() => setStep(7)} /> }
+            { step === 7 && <PaymentDetails db={props.db} nextStep={() => setStep(8)} /> }
+            { step === 8 && <ShareCampaign /> }
         </div>
     );
 }

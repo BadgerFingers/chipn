@@ -25,7 +25,12 @@ code {
 .btn-white{
   @apply bg-white shadow-md border border-grey-superlight
 }
-.btn-white span{
+.btn-white span,
+.text-gradient{
+  -webkit-text-fill-color: transparent;
+  @apply bg-gradient-to-r from-pink to-purple text-white bg-clip-text
+}
+.text-gradient{
   -webkit-text-fill-color: transparent;
   @apply bg-gradient-to-r from-pink to-purple text-white bg-clip-text
 }
@@ -104,4 +109,22 @@ input[type=range]::-ms-fill-upper {
 }
 input[type=range]:focus::-ms-fill-upper {
   @apply bg-gradient-to-r from-pink to-purple rounded-full;
+}
+
+
+
+/* PROGRESS BAR */
+#progressbar {
+  -webkit-appearance: none;
+   appearance: none;
+  @apply w-full h-4;
+}
+
+#progressbar[value]::-webkit-progress-bar {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+  @apply bg-white bg-opacity-50 rounded-lg;
+}
+
+#progressbar[value]::-webkit-progress-value {
+  @apply bg-gradient-to-r from-pink to-purple rounded-sm rounded-l-lg 
 }

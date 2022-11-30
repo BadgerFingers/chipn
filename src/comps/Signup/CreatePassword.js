@@ -1,10 +1,13 @@
 import { Formik, Field, ErrorMessage } from "formik";
 import { useState } from "react";
+import Loader from "../Loader/Loader";
 
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { FaCheckCircle } from "react-icons/fa";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const CreatePassword = (props) => {
+  const auth = getAuth();
   const [showLoader, setShowLoader] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [formErr, setFormErr] = useState();
@@ -20,7 +23,7 @@ const CreatePassword = (props) => {
   };
 
   const checkPassword = (src) => {
-    console.log(src);
+    // console.log(src);
     validPassword(src);
     if (!validPassword(src)) {
       setFormErr("Password not strong enough!");
@@ -78,10 +81,18 @@ const CreatePassword = (props) => {
       return false;
     }
   };
+
   return (
-    <div className="px-4 animate__animated animate__fadeInUp animate__faster">
+    <div className="relative px-4 animate__animated animate__fadeInUp animate__faster">
+      {showLoader && (
+        <div className="absolute z-[100] top-0 left-0 flex flex-col justify-center items-center w-full h-full bg-white bg-opacity-90">
+          <Loader />
+        </div>
+      )}
       <div>
-        <h1 className="font-black leading-tight text-[2.8rem] mb-5">Create a password</h1>
+        <h1 className="font-black leading-tight text-[2.8rem] mb-5">
+          Create a password
+        </h1>
         <p className="font-light">
           Please create a password so you can securely access your account.
         </p>
@@ -110,11 +121,27 @@ const CreatePassword = (props) => {
           onSubmit={(values, { setSubmitting }) => {
             setFormErr("");
             setShowLoader(true);
-            setTimeout(async () => {
-              props.nextStep();
-              setShowLoader(false);
-              setSubmitting(false);
-            }, 400);
+            //
+            createUserWithEmailAndPassword(
+              auth,
+              localStorage.getItem("email"),
+              values.password
+            )
+              .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                localStorage.setItem("uid", user.uid);
+                console.log(user);
+                props.nextStep();
+              })
+              .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage);
+                setShowLoader(false);
+                setFormErr(errorMessage);
+                setSubmitting(false);
+              });
           }}
         >
           {({

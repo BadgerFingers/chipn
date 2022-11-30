@@ -1,8 +1,36 @@
+import { useState } from 'react';
 import { Field, Formik } from "formik";
+import { doc, setDoc } from "firebase/firestore";
+import Loader from "../Loader/Loader";
+
 
 const CreateCampaign = (props) => {
+  const db = props.db;
+  const [showLoader, setShowLoader] = useState(false);
+  
+  const randomStringGenerator = () => {
+    let text = "";
+    let possible =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (let i = 0; i < 10; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    return text;
+  }
+
+  const calculateEndDate = (startDate, duration) => {
+    let endDate = new Date(startDate);
+    endDate.setDate(endDate.getDate() + duration);
+    return endDate;
+  }
+
     return (
-        <div className="px-4 animate__animated animate__fadeInUp animate__faster h-[80vh] overflow-scroll">
+        <div className="relative px-4 animate__animated animate__fadeInUp animate__faster h-[80vh] overflow-scroll">
+          {showLoader && (
+        <div className="absolute z-[100] top-0 left-0 flex flex-col justify-center items-center w-full h-full bg-white bg-opacity-90">
+          <Loader />
+        </div>
+      )}
             <h1 className="font-black leading-tight text-[2.8rem] mb-5">Your campaign details</h1>
             <Formik
        initialValues={{
@@ -18,12 +46,40 @@ const CreateCampaign = (props) => {
         }
          return errors;
        }}
-       onSubmit={(values, { setSubmitting }) => {
-         setTimeout(() => {
-           alert(JSON.stringify(values, null, 2));
-           setSubmitting(false);
-           props.nextStep();
-         }, 400);
+       onSubmit={async(values, { setSubmitting }) => {
+        setShowLoader(true);
+        console.log(calculateEndDate(new Date(), values.campaignDuration))
+        //  setTimeout(async() => {
+          //  alert(JSON.stringify(values, null, 2));
+          try{
+            localStorage.setItem("campaign", values.campaign);
+            localStorage.setItem("campaignAmount", values.campaignAmount);
+            localStorage.setItem("campaignDuration", values.campaignDuration);
+            localStorage.setItem("status", "active");
+            localStorage.setItem("completionDate", calculateEndDate(new Date(), values.campaignDuration));
+            localStorage.setItem("message", values.message);
+            localStorage.setItem("campaignID", randomStringGenerator());
+
+              const set = await setDoc(doc(db, 'chippin', `${localStorage.getItem('uid')}/campaigns/${localStorage.getItem('campaignID')}`), {
+                  name: localStorage.getItem('campaign'),
+                  campaignAmount: localStorage.getItem('campaignAmount'),
+                  amountContributed: 0,
+                  campaignDuration: localStorage.getItem('campaignDuration'),
+                  status: localStorage.getItem('status'),
+                  completionDate: localStorage.getItem('completionDate'),
+                  campaignMessage: localStorage.getItem('message'),
+              }, { merge: true });
+              console.log(set);
+          }catch(e){
+            setShowLoader(false);
+            setSubmitting(false);
+            console.log(e)
+            return
+          }
+            setShowLoader(false);
+            setSubmitting(false);
+            props.nextStep();
+        //  }, 400);
        }}
      >
        {({
@@ -57,7 +113,7 @@ const CreateCampaign = (props) => {
                 </div>
                 <div className="w-1/2 flex flex-col items-center">
                     <div className="font-bold"><span className="text-2xl">{values.campaignDuration}</span> days</div>
-                    <p className="text-grey-light">Goal amount</p>
+                    <p className="text-grey-light">Campaign duration</p>
                 </div>
             </div>
 

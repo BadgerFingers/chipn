@@ -1,8 +1,20 @@
+import { useState } from 'react';
 import { Formik } from "formik";
+import { doc, setDoc } from "firebase/firestore";
+import Loader from "../Loader/Loader";
+
 
 const PersonalDetails = (props) => {
+  const db = props.db;
+  const [showLoader, setShowLoader] = useState(false);
+
   return (
-    <div className="px-4 animate__animated animate__fadeInUp animate__faster">
+    <div className="relative px-4 animate__animated animate__fadeInUp animate__faster">
+      {showLoader && (
+        <div className="absolute z-[100] top-0 left-0 flex flex-col justify-center items-center w-full h-full bg-white bg-opacity-90">
+          <Loader />
+        </div>
+      )}
       <div>
         <h1 className="font-black leading-tight text-[2.8rem] mb-5">Your personal details</h1>
         <p className="font-light">
@@ -26,12 +38,27 @@ const PersonalDetails = (props) => {
         }
          return errors;
        }}
-       onSubmit={(values, { setSubmitting }) => {
-         setTimeout(() => {
-           alert(JSON.stringify(values, null, 2));
-           setSubmitting(false);
-           props.nextStep();
-         }, 400);
+       onSubmit={async(values, { setSubmitting }) => {
+        setShowLoader(true);
+          try{
+            localStorage.setItem("firstname", values.firstname);
+            localStorage.setItem("lastname", values.lastname);
+            const set = await setDoc(doc(db, 'chippin', localStorage.getItem('uid')), {
+              personal:{
+              firstname: values.firstname,
+              lastname: values.lastname,
+              email: localStorage.getItem('email'),
+            }
+            }, { merge: true });
+            console.log(set);
+          }catch(e){
+            setShowLoader(false);
+            console.log(e);
+            return;
+          }
+            setShowLoader(false);
+            setSubmitting(false);
+            props.nextStep();
        }}
      >
        {({

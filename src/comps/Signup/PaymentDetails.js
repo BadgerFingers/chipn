@@ -1,8 +1,20 @@
+import { useState } from 'react';
 import { Field, Formik } from "formik";
+import { doc, setDoc } from "firebase/firestore";
+import Loader from "../Loader/Loader";
 
-const PaymentDetails = () => {
+
+const PaymentDetails = (props) => {
+  const db = props.db;
+  const [showLoader, setShowLoader] = useState(false);
+
   return (
-    <div className="px-4 animate__animated animate__fadeInUp animate__faster h-[80vh] overflow-scroll">
+    <div className="relative px-4 animate__animated animate__fadeInUp animate__faster h-[80vh] overflow-scroll">
+      {showLoader && (
+        <div className="absolute z-[100] top-0 left-0 flex flex-col justify-center items-center w-full h-full bg-white bg-opacity-90">
+          <Loader />
+        </div>
+      )}
       <h1 className="font-black leading-tight text-[2.8rem] mb-5">
         Your payment details
       </h1>
@@ -37,12 +49,33 @@ const PaymentDetails = () => {
           }
           return errors;
         }}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
+        onSubmit={async(values, { setSubmitting }) => {
+          setShowLoader(true);
+          // setTimeout(() => {
+            // alert(JSON.stringify(values, null, 2));
             setSubmitting(false);
-            //    props.nextStep();
-          }, 400);
+            try{
+              localStorage.setItem("bankName", values.bankName);
+              localStorage.setItem("otherBankName", values.otherBankName);
+              localStorage.setItem("accNumber", values.accNumber);
+              localStorage.setItem("accHolder", values.accHolder);
+              const set = await setDoc(doc(db, 'chippin', localStorage.getItem('uid')), {
+                banking:{
+                  bankName: localStorage.getItem('bankName'),
+                  otherBankName: localStorage.getItem('otherBankName'),
+                  accNumber: localStorage.getItem('accNumber'),
+                  accHolder: localStorage.getItem('accHolder'),
+              }
+              }, { merge: true });
+              console.log(set);
+            }catch(e){
+              setShowLoader(false);
+              console.log(e)
+            }
+            setShowLoader(false);
+            setSubmitting(false);
+            props.nextStep();
+          // }, 400);
         }}
       >
         {({
@@ -146,6 +179,7 @@ const PaymentDetails = () => {
           </form>
         )}
       </Formik>
+      
     </div>
   );
 };

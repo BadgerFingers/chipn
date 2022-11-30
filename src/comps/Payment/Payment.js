@@ -1,34 +1,25 @@
-import bgSplash from "../../img/Background-splash.png";
-import logoWht from "../../img/logo-white.svg";
 import { Formik, Field } from "formik";
 import currenciesData from "./currencies.json";
-import 'https://js.yoco.com/sdk/v1/yoco-sdk-web.js'
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
-const Payment = () => {
+const Payment = (props) => {
     const currencies = currenciesData
 
-    let params = new URLSearchParams(window.location.search);
-    let paramid = params.get("id");
+    // let params = new URLSearchParams(window.location.search);
+    // let paramid = params.get("id");
 
     const yoco = new window.YocoSDK({
         publicKey: 'pk_test_ed3c54a6gOol69qa7f45',
       });
 
   return (
-    <div className="flex flex-col justify-between py-40 px-10 h-[100vh]">
-      <img
-        src={logoWht}
-        alt="chippin logo"
-        className="w-10/12 max-w-[180px] mx-auto"
-      />
-
-      <div className="w-full md:w-3/12 mx-auto">
+      <div className="flex flex-col w-10/12 mx-auto fixed z-1 p-7 rounded-xl bg-white">
         <Formik
           initialValues={{
             amount: "",
             currency: "",
             name: "Chippin",
-            description: paramid,
+            description: props.id,
           }}
           validate={(values) => {
             const errors = {};
@@ -48,11 +39,11 @@ const Payment = () => {
           }}
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
+              // alert(JSON.stringify(values, null, 2));
               setSubmitting(false);
-            
+            console.log(JSON.stringify(values, null, 2))
                 yoco.showPopup({
-                  amount: values.amount * 100,
+                  amountInCents: (values.amount) * 100,
                   currency: values.currency,
                   name: values.name,
                   description: values.description,
@@ -88,7 +79,8 @@ const Payment = () => {
               onSubmit={handleSubmit}
               className="flex flex-col h-[55vh] justify-between"
             >
-              <div>
+              <div className="relative">
+                <IoIosCloseCircleOutline className="text-error-500 bg-white rounded-full text-3xl font-bold absolute -right-6 -top-6 cursor-pointer" onClick={props.cancel} />
                 <input
                   type="text"
                   name="amount"
@@ -161,13 +153,6 @@ const Payment = () => {
           )}
         </Formik>
       </div>
-
-      <img
-        src={bgSplash}
-        alt=""
-        className="absolute -z-[1] inset-0 h-full w-full object-cover"
-      />
-    </div>
   );
 };
 

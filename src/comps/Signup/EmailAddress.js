@@ -1,6 +1,9 @@
 import { Formik } from "formik";
 
 const EmailAddress = (props) => {
+
+  console.log(props.db)
+
   return (
     <div className="px-4">
       <div>
@@ -26,7 +29,13 @@ const EmailAddress = (props) => {
        }}
        onSubmit={(values, { setSubmitting }) => {
          setTimeout(() => {
-           alert(JSON.stringify(values, null, 2));
+          //  alert(JSON.stringify(values, null, 2));
+            try{
+              localStorage.setItem("email", values.email);
+            }catch(e){
+              console.log(e)
+              return;
+            }
            setSubmitting(false);
            props.nextStep();
          }, 400);

@@ -13,8 +13,12 @@ module.exports = {
         'grey-superlight': '#f5f5f5',
         'pink': '#FF2A4F',
         'purple': '#793CEA',
+        'purple-dark': '#462388',
         'error': colors.red,
         'success': colors.green,
+      },
+      skew: {
+        '45': '45deg',
       }
     },
   },

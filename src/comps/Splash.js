@@ -1,4 +1,5 @@
 import React from 'react';
+import { Router, Link } from 'react-router-dom';
 import bgSplash from '../img/Background-splash.png';
 import logoWht from '../img/logo-white.svg';
 
@@ -8,7 +9,7 @@ const Splash = (props) => {
             <img src={ logoWht } alt='chippin logo' className='w-10/12 max-w-[180px] mx-auto' />
             
             <div className='w-full md:w-3/12 mx-auto'>
-                <div className='btn btn-gradient mb-4'>Log in</div>
+                <div className='btn btn-gradient mb-4' onClick={() => props.triggerLogin()}>Log in</div>
                 <div className='btn btn-white' onClick={() => props.triggerCreateAcc()}><span>Create Account</span></div>
             </div>
 

@@ -13,38 +13,6 @@ const Payment = (props) => {
     publicKey: process.env.REACT_APP_YOKO_PK, //'pk_test_ed3c54a6gOol69qa7f45'
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      fetch('/api/payment', {
-        method: 'post',
-        body: JSON.stringify({
-          token: '12345',
-          amountInCents: 1000,
-          currency: 'ZAR',
-          name: 'name',
-          description: 'description',
-          metadata: {
-            email: 'user@email.com',
-          },
-        })
-    })
-        .then(res => {
-          console.log(res)
-          if(!res.ok){
-            console.log(res);
-        }
-        else{
-           console.log(res.status + ' - handle percentage calculations here');
-           // handle percentage calculations here
-        }
-        })
-        .catch(error => {
-            console.log(error.message);
-        })
-    }
-
-    fetchData();
-  }, []);
 
   // const yocoCharge = async (
   //   token,
@@ -131,6 +99,7 @@ const Payment = (props) => {
               },
               callback: function(result) {
                 console.log(result);
+                const country = result.source.country;
                 // This function returns a token that your server can use to capture a payment
                 if (result.error) {
                   const errorMessage = result.error.message;
@@ -140,7 +109,7 @@ const Payment = (props) => {
                   console.log("card successfully tokenised: " + result.id);
                   
                   fetch('/api/payment', {
-                    method: 'post',
+                    method: 'POST',
                     body: JSON.stringify({
                       token: result.id,
                       amountInCents: values.amount * 100,

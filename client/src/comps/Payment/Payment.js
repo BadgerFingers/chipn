@@ -40,7 +40,7 @@ const handleCharge = async (token, amountincents, currency, name, description, m
   }
   if (response.ok){
     setError(null)
-    console.log('New CHarge Made', json)
+    console.log('Response OK: ', json)
   }
 }
   // const yocoCharge = async (
@@ -80,9 +80,9 @@ const handleCharge = async (token, amountincents, currency, name, description, m
   // };
 
 
-  useLayoutEffect(() => {
-    handleCharge('1234', 1000, 'ZAR', 'Name', 'Description', {email: 'user@email.com'})
-  }, []);
+  // useLayoutEffect(() => {
+  //   handleCharge('1234', 1000, 'ZAR', 'Name', 'Description', {email: 'user@email.com'})
+  // }, []);
   return (
     <div className="flex flex-col w-10/12 max-w-[350px] mx-auto p-7 rounded-xl bg-white">
       <Formik
@@ -141,7 +141,7 @@ const handleCharge = async (token, amountincents, currency, name, description, m
                   console.log(result);
                   console.log("card successfully tokenised: " + result.id);
                   
-                  // handleCharge(result.id, values.amount * 100, values.currency, values.name, values.description, {email: values.email})
+                  handleCharge(result.id, values.amount * 100, values.currency, values.name, values.description, {email: values.email})
 
                   //
                 }

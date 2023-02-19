@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Formik, Field } from "formik";
 import currenciesData from "./currencies.json";
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -6,6 +6,8 @@ import axios from "axios";
 
 
 const Payment = (props) => {
+  const [error, setError] = useState(null);
+
   const currencies = currenciesData;
   const secretKey = process.env.REACT_APP_YOKO_SK;
 
@@ -13,7 +15,34 @@ const Payment = (props) => {
     publicKey: process.env.REACT_APP_YOKO_PK, //'pk_test_ed3c54a6gOol69qa7f45'
   });
 
+const handleCharge = async (token, amountincents, currency, name, description, metadata) => {
+  const postBody = {
+    token: token,
+    amountInCents: amountincents,
+    currency: currency,
+    name: name,
+    description: description,
+    metadata: metadata,
+  }
 
+  const response = await fetch('/api/payment', {
+    method: 'POST',
+    body: JSON.stringify(postBody),
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+
+  const json = await response.json();
+
+  if (!response.ok) {
+    setError(json.error)
+  }
+  if (response.ok){
+    setError(null)
+    console.log('New CHarge Made', json)
+  }
+}
   // const yocoCharge = async (
   //   token,
   //   amount,
@@ -50,6 +79,10 @@ const Payment = (props) => {
   //     });
   // };
 
+
+  useLayoutEffect(() => {
+    handleCharge('1234', 1000, 'ZAR', 'Name', 'Description', {email: 'user@email.com'})
+  }, []);
   return (
     <div className="flex flex-col w-10/12 max-w-[350px] mx-auto p-7 rounded-xl bg-white">
       <Formik
@@ -99,7 +132,7 @@ const Payment = (props) => {
               },
               callback: function(result) {
                 console.log(result);
-                const country = result.source.country;
+                const country = result.source.country
                 // This function returns a token that your server can use to capture a payment
                 if (result.error) {
                   const errorMessage = result.error.message;
@@ -108,32 +141,34 @@ const Payment = (props) => {
                   console.log(result);
                   console.log("card successfully tokenised: " + result.id);
                   
-                  fetch('/api/payment', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                      token: result.id,
-                      amountInCents: values.amount * 100,
-                      currency: values.currency,
-                      name: values.name,
-                      description: values.description,
-                      metadata: {
-                        email: values.email,
-                      },
-                    })
-                })
-                    .then(res => {
-                      console.log(res)
-                      if(!res.ok){
-                        console.log(res);
-                    }
-                    else{
-                       console.log(res.status + ' - handle percentage calculations here');
-                       // handle percentage calculations here
-                    }
-                    })
-                    .catch(error => {
-                        console.log(error.message);
-                    })
+                  // handleCharge(result.id, values.amount * 100, values.currency, values.name, values.description, {email: values.email})
+
+                //   fetch('/api/payment', {
+                //     method: 'POST',
+                //     body: JSON.stringify({
+                //       token: result.id,
+                //       amountInCents: values.amount * 100,
+                //       currency: values.currency,
+                //       name: values.name,
+                //       description: values.description,
+                //       metadata: {
+                //         email: values.email,
+                //       },
+                //     })
+                // })
+                //     .then(res => {
+                //       console.log(res)
+                //       if(!res.ok){
+                //         console.log(res);
+                //     }
+                //     else{
+                //        console.log(res.status + ' - handle percentage calculations here');
+                //        // handle percentage calculations here
+                //     }
+                //     })
+                //     .catch(error => {
+                //         console.log(error.message);
+                //     })
                   //
                 }
                 // In a real integration - you would now pass this chargeToken back to your
@@ -253,6 +288,7 @@ const Payment = (props) => {
             >
               Next
             </button>
+            {error && <p className="text-error-500">{error}</p>}
           </form>
         )}
       </Formik>

@@ -1,7 +1,9 @@
 const express = require('express');
 require('dotenv').config();
+const axios = require('axios')
 
 const router = express.Router();
+const SECRET_KEY = process.env.YOKO_SK;
 
 // ---
 router.get('/', (req, res) => {
@@ -11,24 +13,29 @@ router.get('/', (req, res) => {
 // POST new payment
 router.post('/', (req, res) => {
     // res.json({ mssg: 'POSTING payment' })
-    const headers = { "X-Auth-Secret-Key": process.env.YOKO_SK }
     
     res.status(200).send({
         body: req.body,
-        headers: headers
     })
 
     if(res.status(200)){
-        const fetchData = async() => {
-            const response = await fetch('https://online.yoco.com/v1/charges/', {
-                method: 'POST',
-                body: req.body,
-                headers: headers,
-            })
-            const data = await response.json()
-            console.log(data)
-        }
-        fetchData()
+        axios.post(
+            'https://online.yoco.com/v1/charges/',
+            req.body,
+            {
+            headers: {
+                'X-Auth-Secret-Key': SECRET_KEY,
+            },
+            },
+        )
+        .then(res => {
+            // res.status will contain the HTTP status code
+            // res.data will contain the response body
+            res.send({data: res.data})
+        })
+        .catch(error => {
+            // handle errors
+        })
     }
     }
     //

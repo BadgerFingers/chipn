@@ -143,32 +143,6 @@ const handleCharge = async (token, amountincents, currency, name, description, m
                   
                   // handleCharge(result.id, values.amount * 100, values.currency, values.name, values.description, {email: values.email})
 
-                //   fetch('/api/payment', {
-                //     method: 'POST',
-                //     body: JSON.stringify({
-                //       token: result.id,
-                //       amountInCents: values.amount * 100,
-                //       currency: values.currency,
-                //       name: values.name,
-                //       description: values.description,
-                //       metadata: {
-                //         email: values.email,
-                //       },
-                //     })
-                // })
-                //     .then(res => {
-                //       console.log(res)
-                //       if(!res.ok){
-                //         console.log(res);
-                //     }
-                //     else{
-                //        console.log(res.status + ' - handle percentage calculations here');
-                //        // handle percentage calculations here
-                //     }
-                //     })
-                //     .catch(error => {
-                //         console.log(error.message);
-                //     })
                   //
                 }
                 // In a real integration - you would now pass this chargeToken back to your

@@ -11,8 +11,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     // res.json({ mssg: 'POSTING payment' })
     //
-    const fetchData = async() => {
-        await fetch(
+        fetch(
             "https://online.yoco.com/v1/charges/",{
               headers: {
                   'X-Auth-Secret-Key': process.env.REACT_APP_YOKO_SK
@@ -31,8 +30,6 @@ router.post('/', (req, res) => {
                  "Oops, there was a problem: " + err.message,
              });
         });
-    }
-    fetchData();
     //
     });
 

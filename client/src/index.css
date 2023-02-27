@@ -15,7 +15,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+.btn-disabled{
+  @apply p-3 text-lg text-center font-medium rounded-full transition-colors cursor-not-allowed
+}
 .btn{
   @apply p-3 text-lg text-center font-medium rounded-full transition-colors cursor-pointer
 }

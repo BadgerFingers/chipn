@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { FaAngleLeft, FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
-import { collection, getDocs, getFirestore } from "firebase/firestore";
+import { doc, updateDoc, collection, getDocs, getFirestore } from "firebase/firestore";
 import { app } from '../../firebase-config';
 
 
@@ -45,6 +45,29 @@ const Dashboard = (props) => {
     fetchData();
     console.log(campaigns);
   }, []);
+
+  useEffect(() => {
+    console.log('useEffect to set campaign status\'s');
+    campaigns.map((campaign) => {
+        const today = new Date();
+        const endDate = new Date(campaign.completionDate);
+        const daysLeft = Math.floor((endDate - today) / (1000 * 60 * 60 * 24));
+        console.log(daysLeft);
+        if (daysLeft <= 0) {
+            console.log('campaign has expired');
+            // set Campaign Status to 'expired'
+            const statusUpdater = async () => {
+                const campaignRef = doc(db, "chippin", `${uid}/campaigns/${campaign.id}`);
+                await updateDoc(campaignRef, {
+                    status: 'expired'
+                });
+            }
+            statusUpdater();
+          }
+            //
+        }
+    )
+  }, [db, uid, campaigns]);
 
 
   return (

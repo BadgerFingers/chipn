@@ -1,15 +1,13 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Formik, Field } from "formik";
 import currenciesData from "./currencies.json";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import axios from "axios";
 
 
 const Payment = (props) => {
   const [error, setError] = useState(null);
 
   const currencies = currenciesData;
-  const secretKey = process.env.REACT_APP_YOKO_SK;
 
   const yoco = new window.YocoSDK({
     publicKey: process.env.REACT_APP_YOKO_PK, //'pk_test_ed3c54a6gOol69qa7f45'
@@ -41,48 +39,32 @@ const handleCharge = async (token, amountincents, currency, name, description, m
   if (response.ok){
     setError(null)
     console.log('Response OK: ', json)
+    console.log('do something with the response')
   }
 }
-  // const yocoCharge = async (
-  //   token,
-  //   amount,
-  //   currency,
-  //   name,
-  //   description,
-  //   email
-  // ) => {
-  //   axios
-  //     .post(
-  //       "https://online.yoco.com/v1/charges/",
-  //       {
-  //         token: token,
-  //         amountInCents: amount * 100,
-  //         currency: currency,
-  //         name: name,
-  //         description: description,
-  //         metadata: {
-  //           email: email,
-  //         },
-  //       },
-  //       {
-  //         headers: {
-  //           "X-Auth-Secret-Key": secretKey,
-  //         },
-  //       }
-  //     )
-  //     .then((res) => {
-  //       console.log(res);
-  //       // props.success(values.amount)
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
+
+const calculateCustomerPayout = (amount, countryCode) => {
+  const processingFee = countryCode === "ZA" ? 0.0295 : 0.0345;
+  const platformFee = 0.03;
+  const tax = 0.15;
+
+  const totalProcessingFee = (amount * processingFee) + (amount * processingFee * tax);
+  const totalPlatformFee = (amount - totalProcessingFee) * platformFee;
+
+  const netAmount = amount - totalProcessingFee - totalPlatformFee;
+
+  return netAmount;
+}
+
+useEffect(() => {
+  const amount = 100; // 100 or any other amount
+  const countryCode = "ZA"; // or any other country code
+  const netAmount = calculateCustomerPayout(amount, countryCode);
+  console.log(netAmount); // output: 93.70[ZA] 93.15[USA]
+  //props.success(netAmount)
+}, [])
 
 
-  // useLayoutEffect(() => {
-  //   handleCharge('1234', 1000, 'ZAR', 'Name', 'Description', {email: 'user@email.com'})
-  // }, []);
   return (
     <div className="flex flex-col w-10/12 max-w-[350px] mx-auto p-7 rounded-xl bg-white">
       <Formik

@@ -85,6 +85,33 @@ const Campaign = (props) => {
     
   }, []);
 
+  useEffect(() => {
+    if (campaignInfo) {
+      console.log(campaignInfo.completionDate);
+      const checkIfPastDate = (dateString) => {
+        const inputDate = new Date(dateString);
+        const today = new Date();
+        
+        if (inputDate <= today) {
+          if (inputDate.toDateString() === today.toDateString()) {
+            return "Today";
+          } else {
+            return "Past date";
+          }
+        } else {
+          return "Future date";
+        }
+      }
+      const result = checkIfPastDate(campaignInfo.completionDate);
+      if (result === "Past date" && campaignInfo.status === 'active') {
+          console.log('update status to expired')
+          setCampaignInfo({ ...campaignInfo, 'status': 'Expired' });
+          // -- update campaign status in firebase
+      }
+    }
+    
+  }, [campaignInfo]);
+
   return (
     <div className="flex flex-col justify-around md:justify-between py-4 md:py-40 px-4 h-screen">
       {showPayment && (
@@ -118,7 +145,7 @@ const Campaign = (props) => {
                   className={
                     campaignInfo.status === "active"
                       ? "text-green-500"
-                      : "text-gray-200"
+                      : "text-error-500"
                   }
                 >
                   {campaignInfo.status}
@@ -127,7 +154,7 @@ const Campaign = (props) => {
                   className={
                     campaignInfo.status === "active"
                       ? "text-green-500 inline"
-                      : "text-gray-200 inline"
+                      : "text-error-500 inline"
                   }
                 />
               </span>
@@ -166,7 +193,9 @@ const Campaign = (props) => {
                   max={campaignInfo.campaignAmount}
                   value={campaignInfo.amountContributed}
                 ></progress>
-                <div
+
+                {campaignInfo.status === 'active' && (
+                  <div
                   className="btn btn-success"
                   onClick={() => {
                     showPaymentHandler();
@@ -174,6 +203,16 @@ const Campaign = (props) => {
                 >
                   I want to donate
                 </div>
+                )}
+
+                {campaignInfo.status !== 'active' && (
+                  <div
+                  className="btn-disabled bg-gray-400 text-white"
+                >
+                  Contibutions are closed
+                </div>
+                )}
+
                 { isProcessing && (
                   <p>Processing{dots}</p>
                 ) }

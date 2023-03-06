@@ -15,7 +15,8 @@ const CreateCampaign = () => {
     const uid = auth.currentUser.uid;
     localStorage.setItem('uid', uid);
 
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState(1); // 1 = create, 2 = share
+
 
 
     return (
@@ -27,9 +28,9 @@ const CreateCampaign = () => {
                     {step === 1 && <Create db={db} nextStep={() => setStep(2)} />}
                     {step === 2 &&
                     <>
-                        <Share />
-                        <Link to={`/campaign?id=${localStorage.getItem('campaignID')}&userid=${uid}`}>View Campaign</Link>
-                        <Link to="/">Exit</Link>
+                        <Share exit={() =>{}} campaignurl={`/campaign?id=${localStorage.getItem('campaignID')}&userid=${uid}`} dash="/" />
+                        {/* <Link to={`/campaign?id=${localStorage.getItem('campaignID')}&userid=${uid}`}>View Campaign</Link> */}
+                        {/* <Link to="/">Exit</Link> */}
                     </>
                     }
                 </div>

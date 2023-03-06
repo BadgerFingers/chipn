@@ -52,29 +52,6 @@ function App() {
     setShowDashboard(true);
   }
 
-  // useEffect(() => {
-  //   fetch('/api/payment', {
-  //     method: 'post',
-  //     body: JSON.stringify({
-  //       token: 'token',
-  //       amountInCents: 1000,
-  //       currency: 'ZAR',
-  //       name: 'name',
-  //       description: 'description',
-  //       metadata: {
-  //         email: 'user@email.com',
-  //       },
-  //     })
-  // })
-  //   .then(response => {
-  //     console.log(response)
-  //   })
-  //   .catch(error => {
-  //     // handle errors
-  //     console.log(error)
-  //   })
-    
-  // }, []);
 
   useEffect(() => {
     const userCheck = auth.onAuthStateChanged((user) => {
@@ -91,11 +68,7 @@ function App() {
 
   return (
     <div className='container mx-auto h-full overflow-hidden'>
-      {/* {(typeof backendData.mssg === 'undefined') ?
-      <div className='text-center text-2xl'>Loading...</div>
-      :
-      <div className='text-center text-2xl'>{backendData.mssg}</div>
-      } */}
+      
       { localStorage.getItem('swUpdate') === 'true' && <SwUpdate msg="New content is available and will be used when all cache and tabs for this page are closed." /> }
       <Routes>
         <Route

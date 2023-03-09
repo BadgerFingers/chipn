@@ -6,6 +6,9 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 
 const Payment = (props) => {
   const [error, setError] = useState(null);
+  const [amountToCents, setAmountToCents] = useState(0);
+  const [chargeAmount, setChargeAmount] = useState(0);
+  const [amountError, setAmountError] = useState(null);
 
   const currencies = currenciesData;
 
@@ -43,7 +46,7 @@ const handleCharge = async (token, amountincents, currency, name, description, m
   }
 }
 
-const calculateCustomerPayout = (amount, countryCode) => {
+const addPlatformFees = (amount, countryCode) => {
   const processingFee = countryCode === "ZA" ? 0.0295 : 0.0345;
   const platformFee = 0.03;
   const tax = 0.15;
@@ -51,18 +54,24 @@ const calculateCustomerPayout = (amount, countryCode) => {
   const totalProcessingFee = (amount * processingFee) + (amount * processingFee * tax);
   const totalPlatformFee = (amount - totalProcessingFee) * platformFee;
 
-  const netAmount = amount - totalProcessingFee - totalPlatformFee;
+  const netAmount = amount + totalProcessingFee + totalPlatformFee;
+  console.log(netAmount)
+  setAmountToCents(Math.ceil(netAmount*100))
+  setChargeAmount((Math.ceil(netAmount*100)/100).toFixed(2))
+  if(amount === 0){
+    setAmountError('Please add a valid amount')
+  }
 
   return netAmount;
 }
 
-useEffect(() => {
-  const amount = 100; // 100 or any other amount
-  const countryCode = "ZA"; // or any other country code
-  const netAmount = calculateCustomerPayout(amount, countryCode);
-  console.log(netAmount); // output: 93.70[ZA] 93.15[USA]
-  //props.success(netAmount)
-}, [])
+// useEffect(() => {
+//   const amount = 100; // 100 or any other amount
+//   const countryCode = "ZA"; // or any other country code
+//   const netAmount = addPlatformFees(amount, countryCode);
+//   console.log(netAmount); // output: 106.40 -- 93.70[ZA] 106.85 -- 93.15[USA]
+//   //props.success(netAmount)
+// }, [])
 
 
   return (
@@ -105,7 +114,7 @@ useEffect(() => {
             props.cancel(); // hide payment form
             console.log(JSON.stringify(values, null, 2));
             yoco.showPopup({
-              amountInCents: values.amount * 100,
+              amountInCents: amountToCents,
               currency: values.currency,
               name: values.name,
               description: values.description,
@@ -155,6 +164,8 @@ useEffect(() => {
                 className="text-error-500 bg-white rounded-full text-3xl font-bold absolute -right-6 -top-6 cursor-pointer"
                 onClick={props.cancel}
               />
+              {`Amount to cents: ` + amountToCents}
+              {`Charge amount: ` + chargeAmount}
 
               <input
                 type="hidden"
@@ -189,6 +200,10 @@ useEffect(() => {
                   type="text"
                   name="amount"
                   onChange={handleChange}
+                  onInput={() => {
+                    setChargeAmount(null)
+                    setAmountError(null)
+                  }}
                   onBlur={handleBlur}
                   value={values.amount}
                   className="w-full p-2 mt-4 border border-x-transparent border-t-transparent border-b-gray-light"
@@ -237,13 +252,32 @@ useEffect(() => {
               </div>
             </div>
 
+            { chargeAmount && (amountToCents !== 0) && !errors.length &&
             <button
               type="submit"
               disabled={isSubmitting}
-              className="btn btn-gradient"
+              className="btn btn-gradient mt-5"
             >
-              Next
+              Pay R{chargeAmount}
             </button>
+            }
+
+            { !chargeAmount && !errors.length &&
+            <>
+            <div className="p-4 font-thin border-gray-400 rounded-lg">
+              To ensure that you donate the full amount, we need to add our platform fee of ~5% to your payment.
+            </div>
+            <button
+              type="button"
+              className="btn btn-white mt-5"
+              onClick={() => addPlatformFees(Number(values.amount), "ZA")}
+            >
+              <span>Add platform fees</span>
+            </button>
+            <span className="text-error-500 text-sm text-center">{amountError}</span>
+            </>
+            }
+
             {error && <p className="text-error-500">{error}</p>}
           </form>
         )}

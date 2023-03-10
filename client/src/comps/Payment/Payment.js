@@ -168,8 +168,9 @@ const addPlatformFees = (amount, countryCode) => {
                 className="text-error-500 bg-white rounded-full text-3xl font-bold absolute -right-6 -top-6 cursor-pointer"
                 onClick={props.cancel}
               />
-              {`Amount to cents: ` + amountToCents}
-              {`Charge amount: ` + chargeAmount}
+              
+              {/* {`Amount to cents: ` + amountToCents}
+              {`Charge amount: ` + chargeAmount} */}
 
               <input
                 type="hidden"

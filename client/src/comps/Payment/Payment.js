@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Formik, Field } from "formik";
 import currenciesData from "./currencies.json";
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -41,6 +41,7 @@ const handleCharge = async (token, amountincents, currency, name, description, m
   }
   if (response.ok){
     setError(null)
+    props.success(amountincents/100)
     console.log('Response OK: ', json)
     console.log('do something with the response')
   }
@@ -123,7 +124,10 @@ const addPlatformFees = (amount, countryCode) => {
               },
               callback: function(result) {
                 console.log(result);
-                const country = result.source.country
+
+                // catch the country code for the card used
+                // const country = result.source.country
+
                 // This function returns a token that your server can use to capture a payment
                 if (result.error) {
                   const errorMessage = result.error.message;

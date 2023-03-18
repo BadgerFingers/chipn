@@ -1,5 +1,5 @@
 
-  .loaderContainer {
+  /* .loaderContainer {
     width: 112px;
     height: 112px;
   }
@@ -381,5 +381,31 @@
       margin-top: 64px;
       margin-left: 0px;
     }
+  } */
+
+
+  .circularLoaderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
+  
+  .circularLoader {
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    border: 0.2rem solid #eee;
+    border-top-color: #793CEA;
+    animation: spin 1s ease-in-out infinite;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
   

@@ -4,12 +4,14 @@ import { Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import { doc, updateDoc, collection, getDocs, getFirestore } from "firebase/firestore";
 import { app } from '../../firebase-config';
+import Loader from "../Loader/Loader";
 
 
 // /campaign?id=yBeJ5tVDlL&userid=79Ivx6RSiVMBgABgVme4lMAUKCr1
 
 const Dashboard = (props) => {
     const [campaigns, setCampaigns] = useState([])
+    const [isLoading, setIsLoading] = useState(true);
   const auth = getAuth();
   const uid = props.uid;
   const db = getFirestore(app);
@@ -27,6 +29,12 @@ const Dashboard = (props) => {
     return newDate.toLocaleDateString("en-GB");
   }
 
+  const signOutOfAccount = async() => {
+    await auth.signOut();
+    localStorage.clear();
+    props.closeDashboard();
+  }
+
 
   useEffect(() => {
     async function fetchData() {
@@ -42,7 +50,9 @@ const Dashboard = (props) => {
           });
     };
 
-    fetchData();
+    fetchData().then(() => {
+        setIsLoading(false);
+    });
     console.log(campaigns);
   }, []);
 
@@ -80,12 +90,12 @@ const Dashboard = (props) => {
         }
       >
         <div
-          className="flex flex-row items-center text-white"
+          className="flex flex-row items-center text-white cursor-pointer"
           onClick={() => {
             props.closeDashboard();
           }}
         >
-          <FaAngleLeft className="text-xl" /> <span onClick={() => {}}>exit</span>
+          <FaAngleLeft className="text-xl" /> <span onClick={() => signOutOfAccount()}>exit</span>
         </div>
         <div className="text-2xl text-white">&nbsp;</div>
       </div>
@@ -108,7 +118,17 @@ const Dashboard = (props) => {
           </div>
 
           <div className="h-[50vh] md:h-[60vh] overflow-scroll">
-          {campaigns.map((campaign, index) => (
+            {
+            isLoading && (
+              <div className="flex flex-row justify-center">
+                <Loader />
+              </div>
+            )
+            }
+
+            
+
+          {!isLoading && campaigns.map((campaign, index) => (
             <div key={index} className="my-4">
               <div className="bg-gradient-to-b from-grey-superlight to-white  flex flex-col md:flex-row gap-2 text-left md:items-center justify-between p-4 border border-grey-superlight rounded-xl">
                 <div>

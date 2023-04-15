@@ -16,10 +16,10 @@ const Payment = (props) => {
     publicKey: process.env.REACT_APP_YOKO_PK, //'pk_test_ed3c54a6gOol69qa7f45'
   });
 
-const handleCharge = async (token, amountincents, currency, name, description, metadata) => {
+const handleCharge = async (token, amountInCents, currency, name, description, metadata) => {
   const postBody = {
     token: token,
-    amountInCents: amountincents,
+    amountInCents: amountInCents,
     currency: currency,
     name: name,
     description: description,
@@ -41,7 +41,7 @@ const handleCharge = async (token, amountincents, currency, name, description, m
   }
   if (response.ok){
     setError(null)
-    props.success(amountincents/100)
+    props.success(amountInCents/100)
     console.log('Response OK: ', json)
     console.log('do something with the response')
   }

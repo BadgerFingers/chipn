@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 
 const ConfirmEmail = (props) => {
   const [email, setEmail] = useState(localStorage.getItem("email"));
+// ------- THIS WAS CAUSING SAFARI TO NOT LOAD THE WEBSITE -------
+  // useEffect(() => {
+  //   const obscureEmail = (val) => {
+  //      return val.replace(/(?<=.).(?=.*@)/g, "*");
+  //   }
+  //   setEmail(obscureEmail(email));
+  // }, []);
 
-  useEffect(() => {
-    const obscureEmail = (val) => {
-       return val.replace(/(?<=.).(?=.*@)/g, "*");
-    }
-    setEmail(obscureEmail(email));
-  }, []);
   return (
     <div className="px-4 animate__animated animate__fadeInUp animate__faster">
       <div>

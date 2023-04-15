@@ -4,6 +4,7 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { Formik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "../Loader/Loader";
 
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
@@ -11,6 +12,7 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 const Login = (props) => {
   const [step, setStep] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const notify = (category, message) => {
     if (category === "info") {
@@ -29,9 +31,11 @@ const Login = (props) => {
 
   const loginHandler = async(email, password) => {
     const auth = getAuth();
+    setIsLoading(true)
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in 
+        // Signed in
+        setIsLoading(false)
         notify("success", "Login successful")
         const user = userCredential.user;
         console.log(user)
@@ -39,6 +43,7 @@ const Login = (props) => {
         // ...
       })
       .catch((error) => {
+        setIsLoading(false)
         const errorCode = error.code;
         const errorMessage = error.message;
         notify("error", errorMessage)
@@ -76,7 +81,9 @@ const Login = (props) => {
       </div>
 
       <div className="px-4">
-        
+        {isLoading && <div className="absolute top-0 left-0 z-50 flex flex-col justify-center bg-white bg-opacity-70 w-full h-full">
+          <Loader />
+          </div>}
         <div>
           <h1 className="font-black leading-tight text-[2.8rem] mb-5">
             Let's get you logged in

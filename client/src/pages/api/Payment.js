@@ -1,44 +1,36 @@
 import axios from "axios";
 
-const Payment = (props) => {
-    console.log(props)
-    return ( <div><h1>api/payment</h1></div>);
- }
-  
- export default Payment;
-
-
-
-
-
-//    axios
-//      .post(
-//       "https://online.yoco.com/v1/charges/",
-//       {
-//         token: token,
-//         amountInCents: amount * 100,
-//         currency: currency,
-//         name: name,
-//         description: description,
-//         metadata: {
-//           email: email,
-//         },
-//       },
-//       {
-//           headers: {
-//             "X-Auth-Secret-Key": secretKey,
-//           },
-//       })
-//      .then((result) => {
-//        res.status(200).send({
-//          message:
-//            "[API] - Successful payment",
-//        });
-//        return result;
-//      })
-//      .catch((err) => {
-//        res.status(500).send({
-//          message:
-//            "Oops, there was a problem, email"
-//        });
-//      });
+export default async function charge(req, res) {
+  if (req.method === "POST") {
+    const { token, amountInCents, currency, name, description, metadata } = req.body;
+    axios
+      .post(
+        "https://online.yoco.com/v1/charges/",
+        {
+            token,
+            amountInCents,
+            currency,
+            name,
+            description,
+            metadata: {
+              email: metadata.email,
+            },
+        },
+        {
+          headers: {
+            "X-Auth-Secret-Key": process.env.REACT_APP_YOKO_SK,
+          },
+        }
+      )
+      .then((res) => {
+        return res.status(200).send({
+          message: "[API] - Successful payment",
+        });
+      })
+      .catch((err) => {
+        const response = { status: 500, message: "Oops, there was a problem" };
+        // handle the error as needed
+        return response;
+      });
+  }
+}

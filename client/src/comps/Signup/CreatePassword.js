@@ -278,15 +278,21 @@ const CreatePassword = (props) => {
                   </li>
                 </ul>
 
-                {formErr && <p className="text-error-500 text-sm">{formErr}</p>}
+                {formErr && 
+                  <>
+                    <p className="text-error-500 text-sm">{formErr}</p>
+                    <div className="btn btn-info mt-5" onClick={() => props.prevStep()}>Start again</div>
+                  </>
+                }
               </div>
-              <button
+              {!formErr && <button
                 type="submit"
                 className="btn btn-gradient"
                 disabled={isSubmitting}
               >
                 Next
-              </button>
+              </button>}
+
             </form>
           )}
         </Formik>

@@ -4,6 +4,8 @@ import logoWht from "../img/logo-white.svg";
 import { Link } from "react-router-dom";
 import Payment from "../comps/Payment/Payment";
 import { RiCheckboxBlankCircleFill } from "react-icons/ri";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 
@@ -34,6 +36,21 @@ const Campaign = (props) => {
     return newDate.toLocaleDateString("en-GB");
   };
 
+  const notify = (category, message) => {
+    if (category === "info") {
+      toast.info(message);
+    }
+    if (category === "warn") {
+      toast.warn(message);
+    }
+    if (category === "success") {
+      toast.success(message);
+    }
+    if (category === "error") {
+      toast.error(message);
+    }
+  };
+
   const updateAmountContributed = async (amount) => {
     setIsProcessing(true);
     console.log(`UID:` + uid)
@@ -49,6 +66,7 @@ const Campaign = (props) => {
     });
     setCampaignInfo(campaignSnap.data());
     setIsProcessing(false);
+    notify("success", "Payment successful");
     console.log(campaignRef);
   }
 
@@ -112,7 +130,8 @@ const Campaign = (props) => {
     
   }, [campaignInfo]);
 
-  return (
+  return <>
+    <ToastContainer />
     <div className="flex flex-col justify-around md:justify-between py-4 md:py-40 px-4 h-screen">
       {showPayment && (
         <div className="flex flex-col items-center justify-center fixed z-[100] h-[100%] top-0 left-0 w-full">
@@ -153,7 +172,7 @@ const Campaign = (props) => {
                 <RiCheckboxBlankCircleFill
                   className={
                     campaignInfo.status === "active"
-                      ? "text-green-500 inline"
+                      ? "text-green-500 inline pulsate"
                       : "text-error-500 inline"
                   }
                 />
@@ -247,7 +266,7 @@ const Campaign = (props) => {
         className="fixed -z-[1] inset-0 h-full w-full object-cover"
       />
     </div>
-  );
+    </>;
 };
 
 export default Campaign;

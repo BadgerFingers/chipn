@@ -52,6 +52,11 @@ function App() {
     setShowDashboard(true);
   }
 
+  const openDashboardHandler = () => {
+    setIsCreateAccount(false);
+    setShowDashboard(true);
+  }
+
 
   useEffect(() => {
     const userCheck = auth.onAuthStateChanged((user) => {
@@ -78,7 +83,7 @@ function App() {
             triggerCreateAcc={ () => setIsCreateAccount(true)}
             triggerLogin={ () => setIsLogin(true) }
           />
-          { isCreateAccount && <CreateAccount db={db} active={isCreateAccount} closeCreateAcc={ () => setIsCreateAccount(false) } /> }
+          { isCreateAccount && <CreateAccount db={db} active={isCreateAccount} closeCreateAcc={ () => setIsCreateAccount(false) } openDashboard={() => openDashboardHandler()} /> }
           { isLogin && <Login db={db} app={app} active={isLogin} closeLogin={ () => setIsLogin(false) } success={() => loginSuccessHandler()} /> }
           { showDashboard && !isCreateAccount && <Dashboard db={db} active={showDashboard} uid={auth.currentUser.uid} closeDashboard={ () => setShowDashboard(false)} /> }
           </>}

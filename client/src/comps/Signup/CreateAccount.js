@@ -20,6 +20,10 @@ const CreateAccount = (props) => {
             setStep(1); // 6
         }
     }, [props.active])
+
+    useEffect(() => {
+        console.log(props)
+    }, [])
     return (
         <div className="animate__animated animate__fadeInUp animate__faster bg-white rounded-t-md absolute z-10 w-full md:w-7/12 lg:w-5/12 h-[85%] top-[15%] left-0 right-0 mx-auto">
             <div className={ props.active ? 'transition-all duration-300 flex flex-row justify-between relative -top-20 px-5' : 'transition-all duration-300 flex flex-row justify-between relative top-20 px-5' }>
@@ -38,12 +42,12 @@ const CreateAccount = (props) => {
 
             { step === 1 &&<EmailAddress db={props.db} nextStep={() => setStep(2)} /> }
             { step === 2 && <ConfirmEmail nextStep={() => setStep(3)} /> }
-            { step === 3 && <CreatePassword nextStep={() => setStep(4)} /> }
+            { step === 3 && <CreatePassword nextStep={() => setStep(4)} prevStep={() => setStep(1)} /> }
             { step === 4 && <PersonalDetails db={props.db} nextStep={() => setStep(5)} /> }
             { step === 5 && <AccountCreated nextStep={() => setStep(6)} /> }
             { step === 6 && <CreateCampaign db={props.db} nextStep={() => setStep(7)} /> }
             { step === 7 && <PaymentDetails db={props.db} nextStep={() => setStep(8)} /> }
-            { step === 8 && <ShareCampaign exit={exitAccountCreation} /> }
+            { step === 8 && <ShareCampaign exit={() => exitAccountCreation()} openDashboard={props.openDashboard} /> }
         </div>
     );
 }

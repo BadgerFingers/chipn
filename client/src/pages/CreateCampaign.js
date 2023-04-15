@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Router, Link } from 'react-router-dom';
+
 import bgSplash from '../img/Background-splash.png';
 import logoWht from '../img/logo-white.svg';
 import Create from '../comps/Signup/CreateCampaign';
@@ -28,7 +28,7 @@ const CreateCampaign = () => {
                     {step === 1 && <Create db={db} nextStep={() => setStep(2)} />}
                     {step === 2 &&
                     <>
-                        <Share exit={() =>{}} campaignurl={`/campaign?id=${localStorage.getItem('campaignID')}&userid=${uid}`} dash="/" />
+                        <Share exit={() =>{}} campaignurl={`/campaign?id=${localStorage.getItem('campaignID')}&userid=${uid}`} openDashboard={() => window.location.assign('/')} />
                         {/* <Link to={`/campaign?id=${localStorage.getItem('campaignID')}&userid=${uid}`}>View Campaign</Link> */}
                         {/* <Link to="/">Exit</Link> */}
                     </>

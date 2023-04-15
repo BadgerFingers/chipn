@@ -51,8 +51,6 @@ const PaymentDetails = (props) => {
         }}
         onSubmit={async(values, { setSubmitting }) => {
           setShowLoader(true);
-          // setTimeout(() => {
-            // alert(JSON.stringify(values, null, 2));
             setSubmitting(false);
             try{
               localStorage.setItem("bankName", values.bankName);
@@ -75,7 +73,6 @@ const PaymentDetails = (props) => {
             setShowLoader(false);
             setSubmitting(false);
             props.nextStep();
-          // }, 400);
         }}
       >
         {({

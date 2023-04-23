@@ -301,7 +301,7 @@ const Campaign = (props) => {
                 <h2 className="text-white mb-5 font-extrabold text-center">Contributors:</h2>
                 {campaignInfo.contributors ? <ul>
                   {campaignInfo.contributors.map((contributor, index) => (
-                    <li key={index} className="flex flex-row justify-between w-full p-1 first-of-type:border-y-2 last-of-type:border-b-2">
+                    <li key={index} className="flex flex-row justify-between w-full p-1 border-t-2 last-of-type:border-y-2">
                       <span>{contributor.name}</span>
                       <span>R{contributor.amount}</span>
                     </li>

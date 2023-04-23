@@ -131,7 +131,7 @@ const Campaign = (props) => {
           setCampaignInfo(campaignSnap.data());
           setUserInfo(userSnap.data());
           setValidCampaign(true);
-          setCopyValue("chippin.netlify.app/campaign?id=" + id + "&userid=" + userid)
+          setCopyValue("chipn.netlify.app/campaign?id=" + id + "&userid=" + userid)
         } else {
           // doc.data() will be undefined in this case
           console.log("No such document!");

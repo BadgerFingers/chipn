@@ -9,7 +9,7 @@ const ShareCampaign = (props) => {
   const uid = localStorage.getItem('uid');
 
   const [copyValue, setCopyValue] = useState(
-    "chippin.netlify.app/campaign?id=" +
+    "chipn.netlify.app/campaign?id=" +
       localStorage.getItem("campaignID") +
       "&userid=" +
       localStorage.getItem("uid")
@@ -35,7 +35,7 @@ const ShareCampaign = (props) => {
       {/* <input
                 className="w-full p-2 border border-x-transparent border-t-transparent border-b-gray-light"
                 disabled
-                value={'chippin.netlify.app/campaign?id=' + localStorage.getItem('campaignID')}
+                value={'chipn.netlify.app/campaign?id=' + localStorage.getItem('campaignID')}
             /> */}
 
       <div className="w-full mx-auto mt-5">

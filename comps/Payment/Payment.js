@@ -53,15 +53,9 @@ const addPlatformFees = (amount, countryCode) => {
   return netAmount;
 }
 
-// useEffect(() => {
-//   const amount = 100; // 100 or any other amount
-//   const countryCode = "ZA"; // or any other country code
-//   const netAmount = addPlatformFees(amount, countryCode);
-//   console.log(netAmount); // output: 106.40 -- 93.70[ZA] 106.85 -- 93.15[USA]
-//   //props.success(netAmount)
-// }, [])
 
 useEffect(() => {
+  console.log('env yoco public key: ' + process.env.NEXT_PUBLIC_YOCO_PK)
   if (window.YocoSDK) {
     // The YocoSDK script has already loaded, so we can create the YocoSDK instance
     const instance = new window.YocoSDK({

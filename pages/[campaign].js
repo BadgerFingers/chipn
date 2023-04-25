@@ -181,7 +181,7 @@ const Campaign = (props) => {
 
   return <>
     <ToastContainer />
-    <div className="flex flex-col justify-around md:justify-between py-4 md:py-40 px-4 h-screen">
+    <div className="flex flex-col justify-around md:justify-between py-4 md:py-20 px-4 h-screen">
       {showPayment && (
         <div className="flex flex-col items-center justify-center fixed z-[100] h-[100%] top-0 left-0 w-full">
           <Payment
@@ -197,7 +197,7 @@ const Campaign = (props) => {
       )}
       <Image src="/img/logo-white.svg" alt='chippin logo' className='w-10/12 max-w-[180px] max-h-[47px] mx-auto' width="180" height="47" priority />
 
-      <div className="w-full md:w-10/12 bg-white bg-opacity-20 rounded-lg p-5 mx-auto">
+      <div className="w-full md:w-10/12 bg-white bg-opacity-20 rounded-lg p-5 mx-auto h-[90vh] max-h-[900px] overflow-scroll">
         {validCampaign && (
           <>
             {showPayment && (
@@ -309,28 +309,33 @@ const Campaign = (props) => {
                 </ul>
                 : <p>No contributors yet</p>
                 }
-              </div>
-              <div className="">
-                <h3 className="text-white mt-6 mb-2 font-extrabold">Share the campaign</h3>
+                <div>
+                <h3 className="text-white mt-10 mb-2 font-extrabold">Actions</h3>
+                <div className="flex flex-col md:flex-row md:w-[300px]">
                 <CopyToClipboard
-          className="relative flex flex-row justify-between p-3 rounded border bg-white border-gray cursor-pointer transition duration-200 ease-in hover:border-success"
-          text={copyValue}
-          onCopy={copyHandler}
-        >
-          <div>
-            <div className="text-success-500">
-              Click to copy your campaign URL
-            </div>
-            <div>
-              <FaCopy className="text-success-500 text-2xl" />
-            </div>
-            {copied && (
-              <div className="flex flex-row justify-center items-center absolute w-full h-full bg-success-500 bg-opacity-90 rounded top-0 left-0 text-white font-bold">
-                Copied!
+                  className="relative flex flex-row justify-between p-3 rounded border bg-white border-gray cursor-pointer transition duration-200 ease-in hover:border-success"
+                  text={copyValue}
+                  onCopy={copyHandler}
+                >
+                  <div>
+                    <div className="text-success-500">
+                      Click to copy your campaign URL
+                    </div>
+                    <div>
+                      <FaCopy className="text-success-500 text-2xl" />
+                    </div>
+                    {copied && (
+                      <div className="flex flex-row justify-center items-center absolute w-full h-full bg-success-500 bg-opacity-90 rounded top-0 left-0 text-white font-bold">
+                        Copied!
+                      </div>
+                    )}
+                  </div>
+                </CopyToClipboard>
+                </div>
+                <div className="mt-24 flex flex-row justify-center">
+                  <span className="p-3 text-center font-medium rounded-full transition-colors cursor-pointer bg-slate-200 text-slate-400 text-xs hover:text-white hover:bg-slate-500">Close Campaign</span>
+                </div>
               </div>
-            )}
-          </div>
-        </CopyToClipboard>
               </div>
               </>
             )}

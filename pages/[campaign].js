@@ -332,9 +332,11 @@ const Campaign = (props) => {
                   </div>
                 </CopyToClipboard>
                 </div>
+                {campaignInfo.status === 'active' && (
                 <div className="mt-24 flex flex-row justify-center">
                   <span className="p-3 text-center font-medium rounded-full transition-colors cursor-pointer bg-slate-200 text-slate-400 text-xs hover:text-white hover:bg-slate-500">Close Campaign</span>
                 </div>
+                )}
               </div>
               </div>
               </>

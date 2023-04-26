@@ -10,6 +10,8 @@ import { useRouter } from "next/router";
 import Script from "next/script";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { FaCopy } from "react-icons/fa";
+import { GiCheckMark } from "react-icons/gi";
+import Confetti from "react-confetti";
 
 import { doc, getDoc, updateDoc, getFirestore } from "firebase/firestore";
 import { initializeApp } from 'firebase/app';
@@ -34,6 +36,12 @@ const Campaign = (props) => {
   const [dots, setDots] = useState('');
   const [copyValue, setCopyValue] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const dismissSuccess = () => {
+    setShowSuccess(false)
+    refreshCampaign()
+  }
 
   const copyHandler = () => {
     setCopied(true);
@@ -71,6 +79,7 @@ const Campaign = (props) => {
 
   const updateAmountContributed = async (amount, email, name) => {
     setIsProcessing(true);
+    setShowSuccess(true)
     console.log(`UID:` + userid)
     console.log(`campaign ID:` + id)
     const campaignRef = doc(db, "chippin", `${userid}/campaigns/${id}`);
@@ -100,6 +109,13 @@ const Campaign = (props) => {
     setIsProcessing(false);
     notify("success", "Payment successful");
     console.log(campaignRef);
+  }
+
+  const refreshCampaign = async () => {
+    const campaignRef = doc(db, "chippin", `${userid}/campaigns/${id}`);
+    const campaignSnap = await getDoc(campaignRef);
+    setCampaignInfo(campaignSnap.data());
+    console.log(campaignSnap.data());
   }
 
   // check if authed user
@@ -181,6 +197,21 @@ const Campaign = (props) => {
 
   return <>
     <ToastContainer />
+
+    { showSuccess &&
+        <div className="flex flex-col items-center justify-center fixed top-0 left-0 z-[100] h-full w-full bg-black bg-opacity-60">
+        <div className="relative bg-white rounded-md p-10 w-5/12 text-center overflow-hidden">
+          <Confetti className="w-full" />
+          <div className="relative z-10">
+            <h2 className="font-semibold text-xl mb-5">Successful payment!</h2>
+            <p>Congratulations, you have successfully chipped in to USERNAME's campaign.</p>
+            <div className="btn btn-success mt-10" onClick={() => dismissSuccess()}>Okay</div>
+          </div>
+          <GiCheckMark className="absolute z-0 top-5 left-0 right-0 m-auto text-[6rem] text-slate-100" />
+        </div>
+      </div>
+      }
+
     <div className="flex flex-col justify-around md:justify-between py-4 md:py-20 px-4 h-screen">
       {showPayment && (
         <div className="flex flex-col items-center justify-center fixed z-[100] h-[100%] top-0 left-0 w-full">
@@ -192,6 +223,8 @@ const Campaign = (props) => {
             success={(val, email, name) => {
               updateAmountContributed(val, email, name);
             }}
+            user={userInfo}
+            refresh={() => refreshCampaign()}
           />
         </div>
       )}

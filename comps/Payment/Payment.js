@@ -12,6 +12,7 @@ const Payment = (props) => {
   const [amountError, setAmountError] = useState(null);
   const [yoco, setYoco] = useState(null);
   const [platformFee, setPlatformFee] = useState(0.0726);
+  
 
   const currencies = currenciesData;
 
@@ -57,9 +58,14 @@ const addPlatformFees = (amount, countryCode) => {
   return netAmount;
 }
 
+const dismissSuccess = () => {
+  setShowSuccess(false)
+  props.refresh()
+}
+
 
 useEffect(() => {
-  console.log('env yoco public key: ' + process.env.NEXT_PUBLIC_YOCO_PK)
+  console.log(props.user.personal.firstname)
   if (window.YocoSDK) {
     // The YocoSDK script has already loaded, so we can create the YocoSDK instance
     const instance = new window.YocoSDK({
@@ -84,6 +90,7 @@ useEffect(() => {
       {/* {yoco && (
         <h1>yoco sdk ready</h1>
       )} */}
+
       <Formik
         initialValues={{
           amount: "",

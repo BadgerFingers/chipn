@@ -11,6 +11,7 @@ const Payment = (props) => {
   const [chargeAmount, setChargeAmount] = useState(0);
   const [amountError, setAmountError] = useState(null);
   const [yoco, setYoco] = useState(null);
+  const [platformFee, setPlatformFee] = useState(0.0726);
 
   const currencies = currenciesData;
 
@@ -36,14 +37,14 @@ const handleCharge = async (token, amountInCents, currency, name, description, m
 
 const addPlatformFees = (amount, countryCode) => {
   const processingFee = countryCode === "ZA" ? 0.0295 : 0.0345;
-  const totalPlatformFee = 0.0726;
+  const totalPlatformFee = platformFee;
   // const platformFee = 0.03;
   // const tax = 0.15;
 
   // const totalProcessingFee = (amount * processingFee) + (amount * processingFee * tax);
   // const totalPlatformFee = (amount - totalProcessingFee) * platformFee;
   // const netAmount = amount + totalProcessingFee + totalPlatformFee;
-  
+
   const totalProcessingFee = amount * totalPlatformFee;
   const netAmount = amount + totalProcessingFee;
   console.log(netAmount)
@@ -280,7 +281,9 @@ useEffect(() => {
                   errors.description}
               </div>
             </div>
-
+            {chargeAmount > 0 && <div>
+              <p className="text-xs text-grey-light">You'll notice we have added a platform fee of {platformFee * 100}% to your total. This is to cover the costs of running the platform. We hope you understand.</p>
+            </div>}
             <button
               type="submit"
               disabled={isSubmitting}

@@ -36,13 +36,16 @@ const handleCharge = async (token, amountInCents, currency, name, description, m
 
 const addPlatformFees = (amount, countryCode) => {
   const processingFee = countryCode === "ZA" ? 0.0295 : 0.0345;
-  const platformFee = 0.03;
-  const tax = 0.15;
+  const totalPlatformFee = 0.0726;
+  // const platformFee = 0.03;
+  // const tax = 0.15;
 
-  const totalProcessingFee = (amount * processingFee) + (amount * processingFee * tax);
-  const totalPlatformFee = (amount - totalProcessingFee) * platformFee;
-
-  const netAmount = amount + totalProcessingFee + totalPlatformFee;
+  // const totalProcessingFee = (amount * processingFee) + (amount * processingFee * tax);
+  // const totalPlatformFee = (amount - totalProcessingFee) * platformFee;
+  // const netAmount = amount + totalProcessingFee + totalPlatformFee;
+  
+  const totalProcessingFee = amount * totalPlatformFee;
+  const netAmount = amount + totalProcessingFee;
   console.log(netAmount)
   setAmountToCents(Math.ceil(netAmount*100))
   setChargeAmount((Math.ceil(netAmount*100)/100).toFixed(2))
@@ -77,9 +80,9 @@ useEffect(() => {
 
   return (
     <div className="flex flex-col w-10/12 max-w-[350px] mx-auto p-7 rounded-xl bg-white">
-      {yoco && (
+      {/* {yoco && (
         <h1>yoco sdk ready</h1>
-      )}
+      )} */}
       <Formik
         initialValues={{
           amount: "",

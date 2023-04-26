@@ -4,7 +4,7 @@ import currenciesData from "./currencies.json";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import axios from "axios";
 
-
+// platform fee 7.26%
 const Payment = (props) => {
   const [error, setError] = useState(null);
   const [amountToCents, setAmountToCents] = useState(0);

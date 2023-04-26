@@ -9,7 +9,7 @@ const ShareCampaign = (props) => {
   const uid = localStorage.getItem('uid');
 
   const [copyValue, setCopyValue] = useState(
-    "chipn.netlify.app/campaign?id=" +
+    "https://chipn.netlify.app/campaign?id=" +
       localStorage.getItem("campaignID") +
       "&userid=" +
       localStorage.getItem("uid")

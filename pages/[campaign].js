@@ -266,10 +266,11 @@ const Campaign = (props) => {
             
             <div className="flex flex-col md:flex-row md:gap-4">
               <div className="md:w-1/2">
-              
+              {user && (
                 <Link href="/" className="w-[110px] flex flex-row items-center text-white font-semibold">
                   <IoIosArrowBack />Dashboard
                 </Link>
+              )}
               
                 <p className="text-black bg-white rounded-lg p-5">
                   <span className="font-bold">Message</span>:{" "}

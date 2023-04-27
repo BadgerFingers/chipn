@@ -36,7 +36,7 @@ const Campaign = (props) => {
   const [dots, setDots] = useState('');
   const [copyValue, setCopyValue] = useState(null);
   const [copied, setCopied] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(true);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const dismissSuccess = () => {
     setShowSuccess(false)

@@ -36,7 +36,7 @@ const Campaign = (props) => {
   const [dots, setDots] = useState('');
   const [copyValue, setCopyValue] = useState(null);
   const [copied, setCopied] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(true);
 
   const dismissSuccess = () => {
     setShowSuccess(false)
@@ -200,7 +200,7 @@ const Campaign = (props) => {
 
     { showSuccess &&
         <div className="flex flex-col items-center justify-center fixed top-0 left-0 z-[100] h-full w-full bg-black bg-opacity-60">
-        <div className="relative bg-white rounded-md p-10 w-5/12 text-center overflow-hidden">
+        <div className="relative bg-white rounded-md p-10 w-11/12 md:w-5/12 text-center overflow-hidden">
           <Confetti className="w-full" />
           <div className="relative z-10">
             <h2 className="font-semibold text-xl mb-5">Successful payment!</h2>

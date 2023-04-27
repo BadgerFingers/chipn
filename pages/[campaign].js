@@ -204,7 +204,7 @@ const Campaign = (props) => {
           <Confetti className="w-full" />
           <div className="relative z-10">
             <h2 className="font-semibold text-xl mb-5">Successful payment!</h2>
-            <p>Congratulations, you have successfully chipped in to {userInfo.personal.firstname}'s campaign.</p>
+            <p>Congratulations, you have successfully chipped in to {userInfo ? userInfo.personal.firstname : 'your friend'}'s campaign.</p>
             <div className="btn btn-success mt-10" onClick={() => dismissSuccess()}>Okay</div>
           </div>
           <GiCheckMark className="absolute z-0 top-5 left-0 right-0 m-auto text-[6rem] text-slate-100" />

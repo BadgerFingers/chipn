@@ -125,9 +125,9 @@ const CreateCampaign = (props) => {
                 onInput={handleChange}
                 onBlur={handleBlur}
                 value={values.campaignAmount}
-                min="1000"
-                max="10000"
-                step="100"
+                min="50"
+                max="15000"
+                step="50"
                 className="w-full mt-4"
             />
 

@@ -4,14 +4,14 @@ import currenciesData from "./currencies.json";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import axios from "axios";
 
-// platform fee 7.26%
+// platform fee 6.29%
 const Payment = (props) => {
   const [error, setError] = useState(null);
   const [amountToCents, setAmountToCents] = useState(0);
   const [chargeAmount, setChargeAmount] = useState(0);
   const [amountError, setAmountError] = useState(null);
   const [yoco, setYoco] = useState(null);
-  const [platformFee, setPlatformFee] = useState(0.0726);
+  const [platformFee, setPlatformFee] = useState(0.0629);
   
 
   const currencies = currenciesData;
@@ -289,7 +289,7 @@ useEffect(() => {
               </div>
             </div>
             {chargeAmount > 0 && <div>
-              <p className="text-xs text-grey-light">You'll notice we have added a platform fee of {platformFee * 100}% to your total. This is to cover the costs of running the platform. We hope you understand.</p>
+              <p className="text-xs text-grey-light mt-5">A service fee of {platformFee * 100}% is added to your total to cover all card processing, banking and platform fees</p>
             </div>}
             <button
               type="submit"

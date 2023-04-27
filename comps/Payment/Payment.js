@@ -289,7 +289,7 @@ useEffect(() => {
               </div>
             </div>
             {chargeAmount > 0 && <div>
-              <p className="text-xs text-grey-light mt-5">A service fee of {platformFee * 100}% is added to your total to cover all card processing, banking and platform fees</p>
+              <p className="text-xs text-grey-light mt-5">A service fee of {platformFee * 100}% is added to your total to cover all card processing, banking and platform fees.</p>
             </div>}
             <button
               type="submit"

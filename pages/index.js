@@ -4,13 +4,8 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import CreateAccount from '../comps/Signup/CreateAccount';
-// import Splash from './comps/Splash';
-// import Payment from './comps/Payment/Payment';
-// import Campaign from './pages/Campaign';
 import Login from '../comps/Login/Login';
 import Dashboard from '../comps/Dashboard/Dashboard';
-// import CreateCampaign from './pages/CreateCampaign';
-// import SwUpdate from './comps/SwUpdate/SwUpdate';
 
 import { getAuth } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';

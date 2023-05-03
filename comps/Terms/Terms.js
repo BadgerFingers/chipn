@@ -50,7 +50,7 @@ const Terms = () => {
 
 <a href="mailto:support@chipn.co.za" className="text-purple">support@chipn.co.za</a>
 
-<p className="mb-4 text-sm">By using our website and services, you agree to be bound by these Terms. If you do not agree to these Terms, do not access or use our website and services.</p>
+<p className="my-4 text-sm">By using our website and services, you agree to be bound by these Terms. If you do not agree to these Terms, do not access or use our website and services.</p>
 
         </div>
     );

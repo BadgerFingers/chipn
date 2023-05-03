@@ -47,7 +47,7 @@ const Privacy = () => {
 
 <a href="mailto:support@chipn.co.za" className="text-purple">support@chipn.co.za</a>
 
-<p className="mb-4 text-sm">By using our website and services, you consent to our collection, use, and disclosure of your personal information as described in this Privacy Policy.</p>
+<p className="my-4 text-sm">By using our website and services, you consent to our collection, use, and disclosure of your personal information as described in this Privacy Policy.</p>
 
 </div>
     );

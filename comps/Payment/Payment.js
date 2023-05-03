@@ -107,18 +107,22 @@ const Payment = (props) => {
     <>
       {showTerms && (
         <div className="fixed z-50 top-0 left-0 h-full bg-black bg-opacity-70 flex flex-row items-center justify-center">
-          <div className="w-11/12 md:w-8/12 pt-16 bg-white p-4 h-[700px] overflow-scroll rounded-md">
-            <div onClick={() => setShowTerms(false)} className="text-error-500 text-3xl flex flex-row justify-end bg-white fixed pt-4 pr-4 top-0 left-0 right-0 mx-auto w-11/12 md:w-8/12"><IoIosCloseCircleOutline /></div>
+          <div className="w-11/12 md:w-8/12 bg-white px-4 h-[700px] overflow-scroll rounded-md">
+            <div onClick={() => setShowTerms(false)} className="text-error-500 text-3xl pt-4 flex flex-row self-start justify-end bg-white fixed pr-4 left-0 right-0 mx-auto w-11/12 md:w-8/12"><IoIosCloseCircleOutline /></div>
+            <div className="mt-16">
             <Terms />
+            </div>
           </div>
         </div>
       )}
 
       {showPrivacy && (
         <div className="fixed z-50 top-0 left-0 h-full bg-black bg-opacity-70 flex flex-row items-center justify-center">
-          <div className="w-11/12 md:w-8/12 pt-16 bg-white p-4 h-[700px] overflow-scroll rounded-md">
-            <span onClick={() => setShowPrivacy(false)} className="text-error-500 text-3xl flex flex-row justify-end bg-white fixed pt-4 pr-4 top-0 left-0 right-0 mx-auto w-11/12 md:w-8/12"><IoIosCloseCircleOutline /></span>
-            <Privacy />
+          <div className="w-11/12 md:w-8/12 bg-white px-4 h-[700px] overflow-scroll rounded-md">
+            <div onClick={() => setShowPrivacy(false)} className="text-error-500 text-3xl pt-4 flex flex-row self-start justify-end bg-white fixed pr-4 left-0 right-0 mx-auto w-11/12 md:w-8/12"><IoIosCloseCircleOutline /></div>
+            <div className="mt-16">
+              <Privacy />
+            </div>
           </div>
         </div>
       )}
@@ -299,9 +303,10 @@ const Payment = (props) => {
                   {errors.amount && touched.amount && errors.amount}
                 </div>
 
-                <div className="mt-5">
-                  <label className="flex flex-row items-center text-xs">
+                <div className="mt-5 flex flex-row items-center text-xs">
+                  <label>
                     <Field type="checkbox" name="agreement" className="mr-2" />{" "}
+                    </label>
                     <p>
                       By continuing, I agree to Chipn's{" "}
                       <span
@@ -318,15 +323,14 @@ const Payment = (props) => {
                         Terms
                       </span>
                     </p>
-                  </label>
-                  {errors.agreement && touched.agreement ? (
+                </div>
+                {errors.agreement && touched.agreement ? (
                     <div className="text-error-500 text-sm">
                       {errors.agreement &&
                         touched.agreement &&
                         errors.agreement}
                     </div>
                   ) : null}
-                </div>
 
                 {/* <Field
                 as="select"

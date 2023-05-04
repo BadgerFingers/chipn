@@ -107,7 +107,7 @@ const Payment = (props) => {
     <>
       {showTerms && (
         <div className="fixed z-50 top-0 left-0 h-full bg-black bg-opacity-70 flex flex-row items-center justify-center">
-          <div className="w-11/12 md:w-8/12 bg-white px-4 h-[700px] overflow-scroll rounded-md">
+          <div className="w-11/12 md:w-8/12 bg-white px-4 h-[500px] md:h-[700px] overflow-scroll rounded-md">
             <div onClick={() => setShowTerms(false)} className="text-error-500 text-3xl pt-4 flex flex-row self-start justify-end bg-white fixed pr-4 left-0 right-0 mx-auto w-11/12 md:w-8/12"><IoIosCloseCircleOutline /></div>
             <div className="mt-16">
             <Terms />
@@ -118,7 +118,7 @@ const Payment = (props) => {
 
       {showPrivacy && (
         <div className="fixed z-50 top-0 left-0 h-full bg-black bg-opacity-70 flex flex-row items-center justify-center">
-          <div className="w-11/12 md:w-8/12 bg-white px-4 h-[700px] overflow-scroll rounded-md">
+          <div className="w-11/12 md:w-8/12 bg-white px-4 h-[500px] md:h-[700px] overflow-scroll rounded-md">
             <div onClick={() => setShowPrivacy(false)} className="text-error-500 text-3xl pt-4 flex flex-row self-start justify-end bg-white fixed pr-4 left-0 right-0 mx-auto w-11/12 md:w-8/12"><IoIosCloseCircleOutline /></div>
             <div className="mt-16">
               <Privacy />

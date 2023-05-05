@@ -31,7 +31,7 @@ const Privacy = () => {
 </ul>
 <h2 className="text-lg font-bold mb-2">4. Security of Personal Information</h2>
 
-<p className="mb-4 text-sm">We take reasonable steps to protect your personal information from unauthorised access, use, or disclosure. We use industry-standard security measures, such as encryption, firewalls, and secure servers, to protect your personal information. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee the security of your personal information.</p>
+<p className="mb-4 text-sm">We take reasonable steps to protect your personal information from unauthorised access, use, or disclosure. We use industry-standard security measures including secure servers, to protect your personal information. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee the security of your personal information.</p>
 
 <h2 className="text-lg font-bold mb-2">5. Your Rights</h2>
 

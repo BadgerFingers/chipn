@@ -56,7 +56,7 @@ export default function Home() {
     return () => userCheck();
   }, [])
   return (
-    <div className='container mx-auto h-full overflow-hidden'>
+    <div className='container mx-auto h-[100vh]'>
       <div className='flex flex-col justify-between py-4 md:py-40 px-10 h-[100vh]'>
             <Image src="/img/logo-white.svg" alt='chippin logo' className='w-10/12 max-w-[180px] max-h-[47px] mx-auto' width="180" height="47" priority />
             {/* <p className='text-white'>YOKO PUBLIC KEY: {process.env.REACT_APP_YOKO_PK}</p> */}

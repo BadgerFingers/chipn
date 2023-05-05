@@ -145,22 +145,22 @@ const Payment = (props) => {
           validate={(values) => {
             const errors = {};
             if (!/(.*[0-9])/i.test(values.amount)) {
-              errors.amount = "Amount is required";
+              errors.amount = "Amount is required.";
             }
             if (!values.username) {
-              errors.username = "Your name is required";
+              errors.username = "Your name is required.";
             }
             if (!values.currency) {
-              errors.currency = "Currency is required";
+              errors.currency = "Currency is required.";
             }
             if (!values.name) {
-              errors.name = "Name is required";
+              errors.name = "Name is required.";
             }
             if (!values.description) {
-              errors.description = "Description is required";
+              errors.description = "Description is required.";
             }
             if (!values.email) {
-              errors.email = "Your email address is required";
+              errors.email = "Your email address is required.";
             } else if (
               !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
             ) {
@@ -253,7 +253,7 @@ const Payment = (props) => {
                   className="w-full p-2 mt-4 border border-x-transparent border-t-transparent border-b-gray-light"
                   placeholder="Name"
                 />
-                <div className="text-error-500 text-xs">
+                <div className="text-error-500 text-xs italic mt-1">
                   {errors.name && touched.name && errors.name}
                 </div>
 
@@ -265,7 +265,7 @@ const Payment = (props) => {
                   className="w-full p-2 mt-4 border border-x-transparent border-t-transparent border-b-gray-light"
                   placeholder="Your name"
                 />
-                <div className="text-error-500 text-xs">
+                <div className="text-error-500 text-xs italic mt-1">
                   {errors.username && touched.username && errors.username}
                 </div>
 
@@ -278,7 +278,7 @@ const Payment = (props) => {
                   className="w-full p-2 mt-4 border border-x-transparent border-t-transparent border-b-gray-light"
                   placeholder="Email address"
                 />
-                <div className="text-error-500 text-xs">
+                <div className="text-error-500 text-xs italic mt-1">
                   {errors.email && touched.email && errors.email}
                 </div>
 
@@ -299,7 +299,7 @@ const Payment = (props) => {
                     placeholder="Amount"
                   />
                 </div>
-                <div className="text-error-500 text-xs">
+                <div className="text-error-500 text-xs italic mt-1">
                   {errors.amount && touched.amount && errors.amount}
                 </div>
 
@@ -325,7 +325,7 @@ const Payment = (props) => {
                     </p>
                 </div>
                 {errors.agreement && touched.agreement ? (
-                    <div className="text-error-500 text-xs">
+                    <div className="text-error-500 text-xs italic mt-1">
                       {errors.agreement &&
                         touched.agreement &&
                         errors.agreement}
@@ -348,7 +348,7 @@ const Payment = (props) => {
                   </option>
                 ))}
               </Field>
-              <div className="text-error-500 text-xs">
+              <div className="text-error-500 text-xs italic mt-1">
                 {errors.currency && touched.currency && errors.currency}
               </div> */}
 
@@ -363,7 +363,7 @@ const Payment = (props) => {
                   placeholder="Description"
                 />
                 {/* <p className="text-white">{ `id: ${id}` }</p> */}
-                <div className="text-error-500 text-xs">
+                <div className="text-error-500 text-xs italic mt-1">
                   {errors.description &&
                     touched.description &&
                     errors.description}

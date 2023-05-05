@@ -307,7 +307,7 @@ const Payment = (props) => {
                   <label>
                     <Field type="checkbox" name="agreement" className="mr-2" />{" "}
                     </label>
-                    <p>
+                    <p className="text-slate-500">
                       By continuing, I agree to Chipn's{" "}
                       <span
                         className="text-purple cursor-pointer"
@@ -321,7 +321,7 @@ const Payment = (props) => {
                         onClick={() => showTermsHandler()}
                       >
                         Terms
-                      </span>
+                      </span>.
                     </p>
                 </div>
                 {errors.agreement && touched.agreement ? (
@@ -371,7 +371,8 @@ const Payment = (props) => {
               </div>
               {chargeAmount > 0 && (
                 <div>
-                  <p className="text-xs text-grey-light mt-5">
+                  <p className="text-xs text-slate-500 mt-5">
+
                     A service fee of {platformFee * 100}% is added to your total
                     to cover all card processing, banking and platform fees.
                   </p>

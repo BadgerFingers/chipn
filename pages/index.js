@@ -69,7 +69,7 @@ export default function Home() {
             <Image
                 src="/img/Background-splash.png"
                 alt="background image"
-                className='absolute -z-[1] inset-0 h-full w-full object-cover'
+                className='fixed -z-[1] inset-0 h-full w-full object-cover'
                 width="650"
                 height="812"
             />

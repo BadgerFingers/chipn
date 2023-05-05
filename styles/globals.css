@@ -34,7 +34,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  @apply h-[100vh];
+  @apply min-h-screen bg-gradient-to-r from-pink to-purple;
 }
 
 code {

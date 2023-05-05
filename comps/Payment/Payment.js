@@ -136,7 +136,7 @@ const Payment = (props) => {
           initialValues={{
             amount: "",
             currency: "ZAR",
-            name: "Chipn",
+            name: "Chip'n",
             description: props.id,
             email: "",
             username: "",
@@ -160,14 +160,14 @@ const Payment = (props) => {
               errors.description = "Description is required";
             }
             if (!values.email) {
-              errors.email = "Required";
+              errors.email = "Your email address is required";
             } else if (
               !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
             ) {
               errors.email = "Invalid email address";
             }
             if (!values.agreement) {
-              errors.agreement = "You must agree to the terms and conditions";
+              errors.agreement = "Please accept our Privacy Policy & Terms.";
             }
             return errors;
           }}
@@ -253,7 +253,7 @@ const Payment = (props) => {
                   className="w-full p-2 mt-4 border border-x-transparent border-t-transparent border-b-gray-light"
                   placeholder="Name"
                 />
-                <div className="text-error-500 text-sm">
+                <div className="text-error-500 text-xs">
                   {errors.name && touched.name && errors.name}
                 </div>
 
@@ -265,7 +265,7 @@ const Payment = (props) => {
                   className="w-full p-2 mt-4 border border-x-transparent border-t-transparent border-b-gray-light"
                   placeholder="Your name"
                 />
-                <div className="text-error-500 text-sm">
+                <div className="text-error-500 text-xs">
                   {errors.username && touched.username && errors.username}
                 </div>
 
@@ -278,7 +278,7 @@ const Payment = (props) => {
                   className="w-full p-2 mt-4 border border-x-transparent border-t-transparent border-b-gray-light"
                   placeholder="Email address"
                 />
-                <div className="text-error-500 text-sm">
+                <div className="text-error-500 text-xs">
                   {errors.email && touched.email && errors.email}
                 </div>
 
@@ -299,7 +299,7 @@ const Payment = (props) => {
                     placeholder="Amount"
                   />
                 </div>
-                <div className="text-error-500 text-sm">
+                <div className="text-error-500 text-xs">
                   {errors.amount && touched.amount && errors.amount}
                 </div>
 
@@ -325,7 +325,7 @@ const Payment = (props) => {
                     </p>
                 </div>
                 {errors.agreement && touched.agreement ? (
-                    <div className="text-error-500 text-sm">
+                    <div className="text-error-500 text-xs">
                       {errors.agreement &&
                         touched.agreement &&
                         errors.agreement}
@@ -348,7 +348,7 @@ const Payment = (props) => {
                   </option>
                 ))}
               </Field>
-              <div className="text-error-500 text-sm">
+              <div className="text-error-500 text-xs">
                 {errors.currency && touched.currency && errors.currency}
               </div> */}
 
@@ -363,7 +363,7 @@ const Payment = (props) => {
                   placeholder="Description"
                 />
                 {/* <p className="text-white">{ `id: ${id}` }</p> */}
-                <div className="text-error-500 text-sm">
+                <div className="text-error-500 text-xs">
                   {errors.description &&
                     touched.description &&
                     errors.description}

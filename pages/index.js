@@ -63,7 +63,7 @@ export default function Home() {
             
             <div className='w-full md:w-3/12 mx-auto'>
                 <div className='btn btn-gradient mb-4' onClick={() => setIsLogin(true)}>Log in</div>
-                <div className='btn btn-white' onClick={() => setIsCreateAccount(true)}><span>Create Account</span></div>
+                {/* <div className='btn btn-white' onClick={() => setIsCreateAccount(true)}><span>Create Account</span></div> */}
             </div>
 
             <Image

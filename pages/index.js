@@ -1,4 +1,4 @@
-import { Inter } from 'next/font/google';
+// import { Inter } from 'next/font/google';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -22,7 +22,7 @@ const app = initializeApp(cfg);
 const db = getFirestore(app);
 const auth = getAuth();
 
-const inter = Inter({ subsets: ['latin'] })
+// const inter = Inter({ subsets: ['latin'] })
 
 
 export default function Home() {

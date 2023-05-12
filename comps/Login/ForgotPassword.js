@@ -124,7 +124,7 @@ const ForgotPassword = (props) => {
 
       {isReset && (
         <>
-          <p className="text-slate-500 mt-5 text-center">Follow the link sent to your emails and then go back to login</p>
+          <p className="text-slate-500 mt-5 text-center">Click on the link sent to your email and then go back to login.</p>
           <div className='btn btn-white mt-10' onClick={() => props.exit()}>
             <span>Back to login</span>
           </div>

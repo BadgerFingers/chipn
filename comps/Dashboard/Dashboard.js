@@ -86,7 +86,7 @@ const Dashboard = (props) => {
 
 
   return (
-    <div className="animate__animated animate__fadeInUp animate__faster bg-white rounded-t-md absolute z-10 w-full md:w-7/12 max-w-[768px] h-[85%] top-[15%] left-0 right-0 mx-auto">
+    <div className="fixed animate__animated animate__fadeInUp animate__faster bg-white rounded-t-md z-10 w-full md:w-7/12 max-w-[768px] h-[85%] top-[15%] left-0 right-0 mx-auto">
       <div
         className={
           props.active

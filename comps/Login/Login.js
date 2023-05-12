@@ -97,7 +97,7 @@ const Login = (props) => {
         >
           <FaAngleLeft className="text-xl" /> <span>exit</span>
         </div>
-        <div className="text-2xl text-white">Log in</div>
+        {/* <div className="text-2xl text-white">Log in</div> */}
       </div>
 
       <div className="px-4">

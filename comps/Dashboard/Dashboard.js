@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { FaAngleLeft, FaPlus } from "react-icons/fa";
 import Link from "next/link";
 import { getAuth } from 'firebase/auth';
-// import { doc, updateDoc, collection, getDocs, getFirestore } from "firebase/firestore";
 import { doc, getDocs, updateDoc, collection, getFirestore } from "firebase/firestore";
 
 import Loader from "../Loader/Loader";

@@ -5,6 +5,9 @@ import { Formik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../Loader/Loader";
+import ForgotPassword from "./ForgotPassword";
+import { IoIosCloseCircleOutline } from "react-icons/io";
+
 
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
@@ -13,6 +16,7 @@ const Login = (props) => {
   const [step, setStep] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   const notify = (category, message) => {
     if (category === "info") {
@@ -51,6 +55,10 @@ const Login = (props) => {
       });
   }
 
+  const forgotPasswordModalHandler = () => {
+    setShowForgotPassword(!showForgotPassword);
+  }
+
   useEffect(() => {
     if (props.active) {
       setStep(1); // 6
@@ -60,6 +68,18 @@ const Login = (props) => {
   return (
     <>
     <ToastContainer />
+
+    {showForgotPassword && (
+      <div className="flex flex-col items-center justify-center fixed top-0 left-0 z-[100] bg-black bg-opacity-80 w-full h-full">
+        <div className="p-4 rounded-lg shadow-lg bg-white w-11/12 sm:w-[300px]">
+        <div onClick={() => forgotPasswordModalHandler()} className="text-error-500 text-3xl flex flex-row justify-end">
+          <IoIosCloseCircleOutline className="cursor-pointer" />
+          </div>
+          <ForgotPassword exit={() => forgotPasswordModalHandler()} />
+        </div>
+      </div>
+    )}
+
     <div className="animate__animated animate__fadeInUp animate__faster bg-white rounded-t-md absolute z-10 w-full md:w-7/12 lg:w-5/12 max-w-[400px] h-[85%] top-[15%] left-0 right-0 mx-auto">
       <div
         className={
@@ -182,6 +202,11 @@ const Login = (props) => {
               </form>
             )}
           </Formik>
+
+          <div className="flex flex-row justify-center mt-10">
+            <span onClick={() => forgotPasswordModalHandler()} className="text-sm text-purple cursor-pointer hover:underline">Forgot Password?</span>
+          </div>
+
         </div>
         
       </div>

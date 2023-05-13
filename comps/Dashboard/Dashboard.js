@@ -160,7 +160,7 @@ const Dashboard = (props) => {
 
           <div className="relative top-[-49px] h-[50px] bg-gradient-to-b from-transparent to-white">&nbsp;</div>
 
-          <div className="fixed left-0 w-full px-4 flex flex-row justify-end items-center gap-2 mt-10">
+          <div className="fixed left-0 w-full px-4 flex flex-row justify-end items-center gap-2 mt-3">
             <span className="text-black mr-2">Add Campaign</span>
               <Link href="/create-campaign">
                 <div className="flex items-center bg-gradient-to-r from-pink to-purple text-white p-4 rounded-full cursor-pointer">

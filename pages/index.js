@@ -61,7 +61,7 @@ export default function Home() {
             <Image src="/img/chipn-logo.png" alt='chippin logo' className='w-10/12 max-w-[167px] max-h-[67px] mx-auto' width="167" height="67" priority />
             {/* <p className='text-white'>YOKO PUBLIC KEY: {process.env.REACT_APP_YOKO_PK}</p> */}
             
-            <div className='w-full md:w-3/12 mx-auto'>
+            <div className='w-full md:w-3/12 mx-auto mb-14'>
                 <div className='btn btn-gradient mb-4' onClick={() => setIsLogin(true)}>Log in</div>
                 {/* <div className='btn btn-white' onClick={() => setIsCreateAccount(true)}><span>Create Account</span></div> */}
             </div>

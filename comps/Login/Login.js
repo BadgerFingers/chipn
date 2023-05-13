@@ -80,7 +80,7 @@ const Login = (props) => {
       </div>
     )}
 
-    <div className="animate__animated animate__fadeInUp animate__faster bg-white rounded-t-md absolute z-10 w-full md:w-7/12 lg:w-5/12 max-w-[400px] h-[85%] top-[15%] left-0 right-0 mx-auto">
+    <div className="animate__animated animate__fadeInUp animate__faster bg-white rounded-t-md fixed z-10 w-full md:w-7/12 lg:w-5/12 max-w-[400px] h-[85%] top-[15%] left-0 right-0 mx-auto">
       <div
         className={
           props.active

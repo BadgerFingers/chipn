@@ -15,9 +15,30 @@ const CreateAccount = (props) => {
         props.closeCreateAcc();
     }
 
+    const confirmEmailResetHandler = () => {
+        const user = props.auth.currentUser;
+      
+        if (user) {
+          // Delete the user from Firebase Authentication
+          user.delete()
+            .then(() => {
+              // User successfully deleted
+              setStep(1); // Reset to step 1
+              localStorage.removeItem('email');
+              localStorage.removeItem('uid');
+            })
+            .catch((error) => {
+              // An error occurred while deleting the user
+              console.error(error);
+              // Handle the error accordingly
+            });
+        }
+      };
+      
+
     useEffect(() => {
         if(props.active){
-            setStep(1); // 6
+            setStep(props.step); // 6
         }
     }, [props.active])
 
@@ -41,8 +62,8 @@ const CreateAccount = (props) => {
             </div>
 
             { step === 1 &&<EmailAddress db={props.db} nextStep={() => setStep(2)} /> }
-            { step === 2 && <ConfirmEmail nextStep={() => setStep(3)} /> }
-            { step === 3 && <CreatePassword nextStep={() => setStep(4)} prevStep={() => setStep(1)} /> }
+            { step === 2 && <CreatePassword nextStep={() => setStep(3)} prevStep={() => setStep(1)} /> }
+            { step === 3 && <ConfirmEmail db={props.db} app={props.app} auth={props.auth} nextStep={() => setStep(4)} reset={() => confirmEmailResetHandler()} /> }
             { step === 4 && <PersonalDetails db={props.db} nextStep={() => setStep(5)} /> }
             { step === 5 && <AccountCreated nextStep={() => setStep(6)} /> }
             { step === 6 && <CreateCampaign db={props.db} nextStep={() => setStep(7)} /> }

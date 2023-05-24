@@ -30,6 +30,7 @@ export default function Home() {
   const [isCreateAccount, setIsCreateAccount] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
+  const [step, setStep] = useState(1);
   
 
   const loginSuccessHandler = () => {
@@ -45,11 +46,19 @@ export default function Home() {
 
   useEffect(() => {
     const userCheck = auth.onAuthStateChanged((user) => {
-      if(user){
+      if(user && user.emailVerified){
         console.log(user)
         localStorage.setItem('uid', user.uid);
         setShowDashboard(true);
-      } else {
+      }
+
+      if(user && !user.emailVerified){
+        setShowDashboard(false);
+        setStep(3);
+        setIsCreateAccount(true);
+      }
+      
+      if(!user) {
         setShowDashboard(false);
       }
     });
@@ -63,7 +72,7 @@ export default function Home() {
             
             <div className='w-full md:w-3/12 mx-auto mb-14'>
                 <div className='btn btn-gradient mb-4' onClick={() => setIsLogin(true)}>Log in</div>
-                {/* <div className='btn btn-white' onClick={() => setIsCreateAccount(true)}><span>Create Account</span></div> */}
+                <div className='btn btn-white' onClick={() => setIsCreateAccount(true)}><span>Create Account</span></div>
             </div>
 
             <Image
@@ -75,7 +84,7 @@ export default function Home() {
             />
         </div>
 
-        { isCreateAccount && <CreateAccount db={db} active={isCreateAccount} closeCreateAcc={ () => setIsCreateAccount(false) } openDashboard={() => openDashboardHandler()} /> }
+        { isCreateAccount && <CreateAccount step={step} db={db} app={app} auth={auth} active={isCreateAccount} closeCreateAcc={ () => setIsCreateAccount(false) } openDashboard={() => openDashboardHandler()} /> }
         { isLogin && <Login db={db} app={app} active={isLogin} closeLogin={ () => setIsLogin(false) } success={() => loginSuccessHandler()} /> }
         { showDashboard && !isCreateAccount && <Dashboard db={db} config={cfg} active={showDashboard} uid={auth.currentUser.uid} closeDashboard={ () => setShowDashboard(false)} /> }
         

@@ -37,12 +37,16 @@ const CreateCampaign = (props) => {
          campaign: '',
          campaignAmount: 0,
          campaignDuration: 0,
-         message: ''
+         message: '',
+         fees: null
         }}
        validate={values => {
          const errors = {};
          if (!/(.*[a-z]){2}/i.test(values.campaign)) {
           errors.campaign = "Please add your campaign name";
+        }
+        if ((!values.fees)) {
+          errors.fees = "Please set who will cover the platform service fees";
         }
          return errors;
        }}
@@ -59,6 +63,7 @@ const CreateCampaign = (props) => {
             localStorage.setItem("completionDate", calculateEndDate(new Date(), values.campaignDuration));
             localStorage.setItem("message", values.message);
             localStorage.setItem("campaignID", randomStringGenerator());
+            localStorage.setItem("fees", values.fees)
 
               const set = await setDoc(doc(db, 'chippin', `${localStorage.getItem('uid')}/campaigns/${localStorage.getItem('campaignID')}`), {
                   name: localStorage.getItem('campaign'),
@@ -68,6 +73,7 @@ const CreateCampaign = (props) => {
                   status: localStorage.getItem('status'),
                   completionDate: localStorage.getItem('completionDate'),
                   campaignMessage: localStorage.getItem('message'),
+                  feesPayableBy: localStorage.getItem("fees")
               }, { merge: true });
               console.log(set);
           }catch(e){
@@ -145,6 +151,7 @@ const CreateCampaign = (props) => {
                 className="w-full mt-4"
             />
 
+
             <label htmlFor="message" className="font-bold mt-10 block">Personalised message</label>
             <Field
                 as="textarea"
@@ -154,6 +161,50 @@ const CreateCampaign = (props) => {
                 className="w-full my-8 rounded-md shadow-lg"
                 value={values.message}
             />
+
+<div>
+              <h2 className="font-bold mt-0 block">Who will pay the platform service fee (6.29%)?</h2>
+              <div className='flex flex-col'>
+                <div className='flex flex-row'>
+                  <input
+                    type="radio"
+                    id="fees"
+                    className='mr-4'
+                    name="fees"
+                    onInput={handleChange}
+                    value="Owner"
+                  />
+                  <p>I will</p>
+                </div>
+
+                <div className='flex flex-row'>
+                  <input
+                    type="radio"
+                    id="fees"
+                    className='mr-4'
+                    name="fees"
+                    onInput={handleChange}
+                    value="Contributors"
+                  />
+                  <p>My Contributors will</p>
+                </div>
+                <div className="text-error-500">{errors.fees && touched.fees && errors.fees}</div>
+              </div>
+              
+              <div className='my-5'>
+                  <p className='text-sm p-2 border border-grey-light rounded-lg'>
+                    {!values.fees && (
+                      <span className='text-blue-500'>There is a platform fee of ~6% which is either payable by the campaign owner, or can be included as part of the contributors payments.</span>
+                    )}
+                    {values.fees === 'Owner' && (
+                      <span className='text-slate-500'>This means that on the completion of your campaign, you as the campaign owner will be paid out the sum of your contributions received less the full service fee of 6.29%.</span>
+                    )}
+                    {values.fees === 'Contributors' && (
+                      <span className='text-slate-500'>This means that a service fee of 6.9% will be added to any amounts contributed to your campaign. On the completion of your campaign, you as the campaign owner will be paid out 100% of the sum of your contributions received.</span>
+                    )}
+                  </p>
+              </div>
+            </div>
 
            </div>
            

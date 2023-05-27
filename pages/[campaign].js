@@ -315,7 +315,7 @@ const Campaign = (props) => {
                   <div
                   className="btn-disabled bg-gray-400 text-white"
                 >
-                  Contibutions are closed
+                  Contributions are closed
                 </div>
                 )}
 

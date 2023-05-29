@@ -37,7 +37,7 @@ const Payment = (props) => {
         metadata,
       });
       console.log(response.data.message); // this will log "[API] - Successful payment" if the payment was successful
-      props.success(amountInCents / 100, metadata.email, metadata.username);
+      props.success(amountInCents / 100, metadata.email, metadata.fname, metadata.lname, metadata.message);
     } catch (error) {
       console.error(error.message);
       // handle the error as needed
@@ -57,6 +57,17 @@ const Payment = (props) => {
     const totalProcessingFee = amount * totalPlatformFee;
     const netAmount = amount + totalProcessingFee;
     console.log(netAmount);
+    setAmountToCents(Math.ceil(netAmount * 100));
+    setChargeAmount((Math.ceil(netAmount * 100) / 100).toFixed(2));
+    if (amount === 0) {
+      setAmountError("Please add a valid amount");
+    }
+
+    return netAmount;
+  };
+
+  const noPlatformFees = (amount) => {
+    const netAmount = amount;
     setAmountToCents(Math.ceil(netAmount * 100));
     setChargeAmount((Math.ceil(netAmount * 100) / 100).toFixed(2));
     if (amount === 0) {
@@ -139,7 +150,9 @@ const Payment = (props) => {
             name: "Chip'n",
             description: props.id,
             email: "",
-            username: "",
+            fname: "",
+            lname:"",
+            message: "",
             agreement: false,
           }}
           validate={(values) => {
@@ -147,8 +160,11 @@ const Payment = (props) => {
             if (!/(.*[0-9])/i.test(values.amount)) {
               errors.amount = "Amount is required.";
             }
-            if (!values.username) {
-              errors.username = "Your name is required.";
+            if (!values.fname) {
+              errors.fname = "First name is required.";
+            }
+            if (!values.lname) {
+              errors.lname = "Last name is required.";
             }
             if (!values.currency) {
               errors.currency = "Currency is required.";
@@ -184,7 +200,9 @@ const Payment = (props) => {
                 description: values.description,
                 metadata: {
                   email: values.email,
-                  username: values.username,
+                  fname: values.fname,
+                  lname: values.lname,
+                  message: values.message
                 },
                 callback: function(result) {
                   console.log(result);
@@ -206,7 +224,7 @@ const Payment = (props) => {
                       values.currency,
                       values.name,
                       values.description,
-                      { email: values.email, username: values.username }
+                      { email: values.email, fname: values.fname, lname: values.lname, message: values.message }
                     );
 
                     //
@@ -258,15 +276,27 @@ const Payment = (props) => {
                 </div>
 
                 <input
-                  name="username"
+                  name="fname"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.username}
+                  value={values.fname}
                   className="w-full p-2 mt-4 border border-x-transparent border-t-transparent border-b-gray-light"
-                  placeholder="Your name"
+                  placeholder="First name"
                 />
                 <div className="text-error-500 text-xs italic mt-1">
-                  {errors.username && touched.username && errors.username}
+                  {errors.fname && touched.fname && errors.fname}
+                </div>
+
+                <input
+                  name="lname"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.lname}
+                  className="w-full p-2 mt-4 border border-x-transparent border-t-transparent border-b-gray-light"
+                  placeholder="Last name"
+                />
+                <div className="text-error-500 text-xs italic mt-1">
+                  {errors.lname && touched.lname && errors.lname}
                 </div>
 
                 <input
@@ -282,6 +312,18 @@ const Payment = (props) => {
                   {errors.email && touched.email && errors.email}
                 </div>
 
+                <div>
+                  <label htmlFor="message" className="text-sm mt-10 block text-slate-500">Send {props.user.personal.firstname} a message (Optional)</label>
+                  <Field
+                      as="textarea"
+                      id="message"
+                      name="message"
+                      rows="5"
+                      className="w-full rounded-md shadow-lg"
+                      value={values.message}
+                  />
+                </div>
+
                 <div className="flex flex-row items-end">
                   <span className="mb-2 font-bold">R</span>
                   <input
@@ -291,7 +333,12 @@ const Payment = (props) => {
                     onInput={(e) => {
                       // setChargeAmount(null)
                       // setAmountError(null)
-                      addPlatformFees(Number(e.target.value), "ZA");
+                      if(props.campaignInfo.feesPayableBy === 'Owner') {
+                        addPlatformFees(Number(e.target.value), "ZA")
+                      }
+                      if(props.campaignInfo.feesPayableBy !== 'Owner') {
+                        noPlatformFees(Number(e.target.value))
+                      }
                     }}
                     onBlur={handleBlur}
                     value={values.amount}

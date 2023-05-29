@@ -77,7 +77,7 @@ const Campaign = (props) => {
     }
   };
 
-  const updateAmountContributed = async (amount, email, name) => {
+  const updateAmountContributed = async (amount, email, fname, lname, message) => {
     setIsProcessing(true);
     setShowSuccess(true)
     console.log(`UID:` + userid)
@@ -88,9 +88,11 @@ const Campaign = (props) => {
     console.log(`campaign data:` + campaignData.amountContributed)
     
     const newContributor = {
-      name,
+      fname,
+      lname,
       email,
       amount,
+      message,
     };
     const newContributors = campaignData.contributors
     ? [...campaignData.contributors, newContributor]
@@ -220,10 +222,11 @@ const Campaign = (props) => {
             cancel={() => {
               showPaymentHandler();
             }}
-            success={(val, email, name) => {
-              updateAmountContributed(val, email, name);
+            success={(val, email, fname, lname, message) => {
+              updateAmountContributed(val, email, fname, lname, message);
             }}
             user={userInfo}
+            campaignInfo={campaignInfo}
             refresh={() => refreshCampaign()}
           />
         </div>
@@ -331,13 +334,19 @@ const Campaign = (props) => {
 
             {user && (
               <>
-              <div className="w-full bg-black bg-opacity-50 text-white rounded-lg p-5 mx-auto">
+              <div className="w-full bg-black bg-opacity-50 text-white rounded-lg p-1 sm:p-5 mx-auto">
                 <h2 className="text-white mb-5 font-extrabold text-center">Contributors:</h2>
                 {campaignInfo.contributors ? <ul>
+                  <li className="flex flex-row justify-between w-full bg-slate-300 text-black">
+                    <span className="mx-2">Name</span>
+                    <span className="mx-2">Message</span>
+                    <span className="mx-2">Amount</span>
+                  </li>
                   {campaignInfo.contributors.map((contributor, index) => (
                     <li key={index} className="flex flex-row justify-between w-full p-1 border-t-2 last-of-type:border-y-2">
-                      <span>{contributor.name}</span>
-                      <span>R{contributor.amount}</span>
+                      <span className="w-2/12">{contributor.fname ? contributor.fname : contributor.name} {contributor.lname}</span>
+                      <span className="w-6/12">{contributor.message ? contributor.message : '--'}</span>
+                      <span className="w-2/12 text-right">R{contributor.amount}</span>
                     </li>
                   ))}
                 </ul>

@@ -72,7 +72,8 @@ export default function Home() {
             
             <div className='w-full md:w-3/12 mx-auto mb-14'>
                 <div className='btn btn-gradient mb-4' onClick={() => setIsLogin(true)}>Log in</div>
-                <div className='btn btn-white' onClick={() => setIsCreateAccount(true)}><span>Create Account</span></div>
+                {/* <div className='btn btn-white' onClick={() => setIsCreateAccount(true)}><span>Create Account</span></div> */}
+                <div className='p-3 rounded-full text-center bg-grey-light bg-opacity-30 text-slate-500 cursor-not-allowed'><span>Create Account</span></div>
             </div>
 
             <Image

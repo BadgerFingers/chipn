@@ -231,9 +231,16 @@ const Campaign = (props) => {
           />
         </div>
       )}
-      <Image src="/img/logo-white.svg" alt='chippin logo' className='w-10/12 max-w-[180px] max-h-[47px] mx-auto' width="180" height="47" priority />
+      <Image
+            src="/img/chipn-logo.png"
+            alt="chippin logo"
+            className="w-10/12 max-w-[167px] max-h-[67px] mx-auto"
+            width="167"
+            height="67"
+            priority
+          />
 
-      <div className="w-full md:w-10/12 bg-white bg-opacity-20 rounded-lg p-5 mx-auto h-[90vh] max-h-[900px] overflow-scroll">
+      <div className="w-full md:w-10/12 bg-white bg-opacity-20 rounded-lg p-5 mx-auto h-[90vh] max-h-[900px] overflow-scroll mt-5">
         {validCampaign && (
           <>
             {showPayment && (

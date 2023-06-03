@@ -383,7 +383,7 @@ const Campaign = (props) => {
                 </CopyToClipboard>
                 </div>
                 {campaignInfo.status === 'active' && (
-                <div className="mt-24 flex flex-row justify-center">
+                <div className="mt-24 mb-4 flex flex-row justify-center">
                   <span className="p-3 text-center font-medium rounded-full transition-colors cursor-pointer bg-slate-200 text-slate-400 text-xs hover:text-white hover:bg-slate-500">Close Campaign</span>
                 </div>
                 )}
@@ -391,6 +391,12 @@ const Campaign = (props) => {
               </div>
               </>
             )}
+
+            <div>
+              <p className="text-white text-sm my-2">
+                <a href="https://www.chipn.co.za" target="_blank">www.chipn.co.za</a> | <a href="mailto:support@chipn.co.za">support@chipn.co.za</a>
+              </p>
+            </div>
           </>
         )}
 

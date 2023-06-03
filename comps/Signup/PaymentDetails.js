@@ -18,13 +18,15 @@ const PaymentDetails = (props) => {
       <h1 className="font-black leading-tight text-[2.8rem] mb-5">
         Your payment details
       </h1>
-      <p className="font-light">Please provide your banking details below.</p>
+      <p className="font-light">In order for us to pay you on the completion of your campaign, please provide your banking details below.</p>
       <Formik
         initialValues={{
           bankName: "",
           otherBankName: "",
           accNumber: "",
           accHolder: "",
+          branchName: "",
+          branchCode: "",
         }}
         validate={(values) => {
           const errors = {};
@@ -39,14 +41,21 @@ const PaymentDetails = (props) => {
           }
           if (!values.accNumber) {
             errors.accNumber = "Required";
-          } else if (!/^[0-9]{11,}$/i.test(values.accNumber)) {
-            errors.accNumber = "Invalid account number";
+          } else if (!/^[0-9]{7,11}$/i.test(values.accNumber)) {
+            errors.accNumber = "Account number must be between 7 and 11 digits.";
           }
           if (!values.accHolder) {
             errors.accHolder = "Required";
-          } else if (!/^[A-Z, a-z]{7,}$/i.test(values.accHolder)) {
-            errors.accHolder = "Account holder name must be at least 7 characters";
+          } else if (!/^(?:\S\s*){3,40}$/i.test(values.accHolder)) {
+            errors.accHolder = "Account holder name must be between 3 and 40 characters";
           }
+          if (!values.branchName) {
+            errors.branchName = "Required";
+          }
+          if (!values.branchCode) {
+            errors.branchCode = "Required";
+          }
+          
           return errors;
         }}
         onSubmit={async(values, { setSubmitting }) => {
@@ -57,12 +66,16 @@ const PaymentDetails = (props) => {
               localStorage.setItem("otherBankName", values.otherBankName);
               localStorage.setItem("accNumber", values.accNumber);
               localStorage.setItem("accHolder", values.accHolder);
+              localStorage.setItem("branchName", values.branchName);
+              localStorage.setItem("branchCode", values.branchCode);
               const set = await setDoc(doc(db, 'chippin', localStorage.getItem('uid')), {
                 banking:{
                   bankName: localStorage.getItem('bankName'),
                   otherBankName: localStorage.getItem('otherBankName'),
                   accNumber: localStorage.getItem('accNumber'),
                   accHolder: localStorage.getItem('accHolder'),
+                  branchName: localStorage.getItem('branchName'),
+                  branchCode: localStorage.getItem('branchCode'),
               }
               }, { merge: true });
               console.log(set);
@@ -159,8 +172,38 @@ const PaymentDetails = (props) => {
                   className="w-full p-2 border border-x-transparent border-t-transparent border-b-gray-light"
                   placeholder="Account holder"
                 />
-                <div className="text-error-500 mb-[-20px]">
+                <div className="text-error-500">
                   {errors.accHolder && touched.accHolder && errors.accHolder}
+                </div>
+              </div>
+
+              <div className="mb-5">
+                <input
+                  type="text"
+                  name="branchName"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.branchName}
+                  className="w-full p-2 border border-x-transparent border-t-transparent border-b-gray-light"
+                  placeholder="Branch name"
+                />
+                <div className="text-error-500">
+                  {errors.branchName && touched.branchName && errors.branchName}
+                </div>
+              </div>
+
+              <div className="mb-5">
+                <input
+                  type="text"
+                  name="branchCode"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.branchCode}
+                  className="w-full p-2 border border-x-transparent border-t-transparent border-b-gray-light"
+                  placeholder="Branch code"
+                />
+                <div className="text-error-500">
+                  {errors.branchCode && touched.branchCode && errors.branchCode}
                 </div>
               </div>
 

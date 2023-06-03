@@ -38,7 +38,7 @@ const CreateAccount = (props) => {
 
     useEffect(() => {
         if(props.active){
-            setStep(props.step); // 6
+            setStep(props.step); // props.step
         }
     }, [props.active])
 
@@ -56,9 +56,9 @@ const CreateAccount = (props) => {
                     }>
                     <FaAngleLeft className='text-xl' /> <span>exit</span>
                 </div>
-                <div className='text-2xl text-white'>
+                {/* <div className='text-2xl text-white'>
                     Let's get started
-                </div>
+                </div> */}
             </div>
 
             { step === 1 &&<EmailAddress db={props.db} nextStep={() => setStep(2)} /> }

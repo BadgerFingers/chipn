@@ -26,7 +26,7 @@ const auth = getAuth();
 
 export default function Home() {
   const router = useRouter();
-  const [isCreateAccount, setIsCreateAccount] = useState(false);
+  const [isCreateAccount, setIsCreateAccount] = useState(false); 
   const [isLogin, setIsLogin] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
   const [step, setStep] = useState(1);

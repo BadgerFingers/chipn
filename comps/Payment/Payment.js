@@ -138,7 +138,7 @@ const Payment = (props) => {
         </div>
       )}
 
-      <div className="flex flex-col w-10/12 max-w-[350px] mx-auto p-7 rounded-xl bg-white">
+      <div className="flex flex-col w-10/12 max-w-[350px] mx-auto p-7 rounded-xl bg-white overflow-scroll">
         {/* {yoco && (
         <h1>yoco sdk ready</h1>
       )} */}

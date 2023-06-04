@@ -73,7 +73,8 @@ const CreateCampaign = (props) => {
                   status: localStorage.getItem('status'),
                   completionDate: localStorage.getItem('completionDate'),
                   campaignMessage: localStorage.getItem('message'),
-                  feesPayableBy: localStorage.getItem("fees")
+                  feesPayableBy: localStorage.getItem("fees"),
+                  createdAt: new Date()
               }, { merge: true });
               console.log(set);
           }catch(e){

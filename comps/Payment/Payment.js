@@ -28,6 +28,7 @@ const Payment = (props) => {
     metadata
   ) => {
     try {
+      props.processing(true);
       const response = await axios.post("/api/payment", {
         token,
         amountInCents,
@@ -38,8 +39,11 @@ const Payment = (props) => {
       });
       console.log(response.data.message); // this will log "[API] - Successful payment" if the payment was successful
       props.success(amountInCents / 100, metadata.email, metadata.fname, metadata.lname, metadata.message);
+      props.processing(false);
     } catch (error) {
       console.error(error.message);
+      props.processing(false);
+      props.error(error.message);
       // handle the error as needed
     }
   };
@@ -258,8 +262,6 @@ const Payment = (props) => {
                   onClick={props.cancel}
                 />
 
-                {/* {`Amount to cents: ` + amountToCents}
-              {`Charge amount: ` + chargeAmount} */}
 
                 <input
                   type="hidden"
@@ -331,12 +333,10 @@ const Payment = (props) => {
                     name="amount"
                     onChange={handleChange}
                     onInput={(e) => {
-                      // setChargeAmount(null)
-                      // setAmountError(null)
-                      if(props.campaignInfo.feesPayableBy === 'Owner') {
+                      if(props.campaignInfo.feesPayableBy !== 'Owner') {
                         addPlatformFees(Number(e.target.value), "ZA")
                       }
-                      if(props.campaignInfo.feesPayableBy !== 'Owner') {
+                      if(props.campaignInfo.feesPayableBy === 'Owner') {
                         noPlatformFees(Number(e.target.value))
                       }
                     }}
@@ -379,25 +379,6 @@ const Payment = (props) => {
                     </div>
                   ) : null}
 
-                {/* <Field
-                as="select"
-                name="currency"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.currency}
-                className="w-full p-2 mt-4 border border-x-transparent border-t-transparent border-b-gray-light"
-                placeholder="Currency"
-              >
-                <option value="">Select currency</option>
-                {currencies.map((currency) => (
-                  <option key={currency.cc} value={currency.cc}>
-                    {currency.cc}
-                  </option>
-                ))}
-              </Field>
-              <div className="text-error-500 text-xs italic mt-1">
-                {errors.currency && touched.currency && errors.currency}
-              </div> */}
 
                 <input
                   type="hidden"
@@ -409,14 +390,14 @@ const Payment = (props) => {
                   className="w-full p-2 mt-4 border border-x-transparent border-t-transparent border-b-gray-light"
                   placeholder="Description"
                 />
-                {/* <p className="text-white">{ `id: ${id}` }</p> */}
                 <div className="text-error-500 text-xs italic mt-1">
                   {errors.description &&
                     touched.description &&
                     errors.description}
                 </div>
               </div>
-              {chargeAmount > 0 && (
+              
+              {props.campaignInfo.feesPayableBy !== 'Owner' && chargeAmount > 0 && (
                 <div>
                   <p className="text-xs text-slate-500 mt-5">
 

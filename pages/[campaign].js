@@ -78,7 +78,6 @@ const Campaign = (props) => {
   };
 
   const updateAmountContributed = async (amount, email, fname, lname, message) => {
-    setIsProcessing(true);
     setShowSuccess(true)
     console.log(`UID:` + userid)
     console.log(`campaign ID:` + id)
@@ -108,7 +107,6 @@ const Campaign = (props) => {
     });
 
     setCampaignInfo(campaignSnap.data());
-    setIsProcessing(false);
     notify("success", "Payment successful");
     console.log(campaignRef);
   }
@@ -199,7 +197,16 @@ const Campaign = (props) => {
 
   return <>
     <ToastContainer />
-
+    {isProcessing && (
+      <div className="flex flex-col items-center justify-center fixed top-0 left-0 z-[100] h-full w-full bg-black bg-opacity-60">
+        <div className="relative bg-white rounded-md p-10 w-11/12 md:w-5/12 text-center overflow-hidden">
+          <div className="relative z-10">
+            <h2 className="font-semibold text-xl mb-5">Processing payment</h2>
+            <p>Please wait while we process your payment.</p>
+          </div>
+        </div>
+      </div>
+    )}
     { showSuccess &&
         <div className="flex flex-col items-center justify-center fixed top-0 left-0 z-[100] h-full w-full bg-black bg-opacity-60">
         <div className="relative bg-white rounded-md p-10 w-11/12 md:w-5/12 text-center overflow-hidden">
@@ -224,6 +231,12 @@ const Campaign = (props) => {
             }}
             success={(val, email, fname, lname, message) => {
               updateAmountContributed(val, email, fname, lname, message);
+            }}
+            processing={(val) => {
+              setIsProcessing(val);
+            }}
+            error={(val) => {
+              notify("error", val);
             }}
             user={userInfo}
             campaignInfo={campaignInfo}
